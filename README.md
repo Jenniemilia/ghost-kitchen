@@ -1,0 +1,2 @@
+# ghost-kitchen
+Tietokantasovellus (TSOHA)
