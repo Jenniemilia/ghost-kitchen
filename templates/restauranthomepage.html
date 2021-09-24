@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2> Tervetuloa ravintola {{ name }} sivuille!</2>
+
+
+<p> Tänään meillä on listalla </p>
+<!--ravintolamenut sql:stä-->
+
+
+
+{% if reviews %}
+<h3>Lue muiden jättämiä arvosteluita</h3>
+{% endif %}
+
+<ul>
+{% for comment in reviews %}
+<li> {{ reviews.user_id }} {{ reviews.stars }} "{{reviews.comment }}"
+{% endfor %}
+</ul>
+
+<!--arvostelu vain kirjautuneena! -->
+{% if session.username %}
+<h2>Montako tähteä annat ravintolalle?</2>
+<form action="/reviews" method="POST">
+<br>
+<!-- vain kirjautuneena kommentointi -->
+<p> Jätä arvostelu
+<br>
+<textarea name="comment" rows="4" cols="35" maxlength="1000"></textarea>
+<p><input type="submit" value="Lähetä">
+<input type="hidden" name="restaurant_id" value="{{ id }}">
+</form>
+{% endif %}
+
+
+</p>
+
+<a href="/">Palaa etusivulle</a>
+
+{% endblock %}

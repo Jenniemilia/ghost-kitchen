@@ -1,0 +1,9 @@
+<!doctype html>
+
+<ul>
+<h2>Hakuasi vastaavat tulokset</h2>
+{% for result in results %}
+<li> {{ result.result }} : {result.restaurant }}
+{% endfor %}
+</ul>
+

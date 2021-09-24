@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+
+	<h2>Tervetuloa tilamaan maistuvaa lounasta suoraan kotiovelle, toimistoon tai vaikkapa puistopiknikille!</2>
+
+	<h2>Päivän tarjoukset</h2>
+	<ul>
+		<li>Kalakeitto
+		<li>Lounasburgeri + ranskalaiset
+		<li>Kikhernecurry
+	</ul>
+
+<br />
+
+	{% if session.username %}
+	<p>Hei {{ session.username }}! Tervetuloa tilamaan lounasta. Muista katsoa päivän tarjoukset.</p>
+
+
+
+	<form action="/result" method= "GET">
+	<p>Mitä tekisi tänään mieli syödä lounaaksi?
+
+	kirjoita hakukenttään niin se kertoo sinulle eri vaihtoehdoista.</p>
+	 <input type="text" name="query">
+	<br />
+	<input type="submit" value="Lähetä">
+	</form> 
+
+	<p>
+
+	Katsele eri ravintoloiden tarjontaa:
+
+	<ul>
+	{% for restaurant in restaurants %}
+		<li><a href="/restauranthomepage/{{restaurant.id}}">{{ restaurant.name }}</a>
+		{% endfor %}
+	</ul>
+
+	<a href="/logout">Kirjaudu ulos</a>
+	{% else %}
+	<a href="/login">Kirjaudu sisään</a>
+	{% endif %}
+
+{% endblock %}
