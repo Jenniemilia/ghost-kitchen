@@ -3,9 +3,10 @@
 
 
 
-	<h2>Tervetuloa tilamaan maistuvaa lounasta suoraan kotiovelle, toimistoon tai vaikkapa puistopiknikille!</2>
+	<h2>Tervetuloa tilamaan maistuvaa ruokaa!</2>
 
 	<h2>Päivän tarjoukset</h2>
+	<!-- Tee random joka arpoo kolme päivän annosta tarjoukseen -->
 	<ul>
 		<li>Kalakeitto
 		<li>Lounasburgeri + ranskalaiset
@@ -15,14 +16,14 @@
 <br />
 
 	{% if session.username %}
-	<p>Hei {{ session.username }}! Tervetuloa tilamaan lounasta. Muista katsoa päivän tarjoukset.</p>
+	<p>Hei {{ session.username }}! Mahtavaa nähdä sinut täällä!</p>
 
 
 
 	<form action="/result" method= "GET">
-	<p>Mitä tekisi tänään mieli syödä lounaaksi?
+	<p>Mitä tekisi tänään mieli syödä?
 
-	kirjoita hakukenttään niin se kertoo sinulle eri vaihtoehdoista.</p>
+	Etsi hakukenttästä eri vaihtoehdoja.</p>
 	 <input type="text" name="query">
 	<br />
 	<input type="submit" value="Lähetä">

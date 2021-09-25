@@ -59,4 +59,6 @@ def result():
 
 @app.route("/restauranthomepage/<int:restaurants_id>")
 def restauranthomepage(restaurants_id):
-	return render_template("restauranthomepage.html", restaurants_id=restaurants_id)
+	info = restaurants.get_info(restaurants_id)
+	return render_template("restauranthomepage.html", restaurants_id=restaurants_id, info=info)
+

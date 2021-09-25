@@ -5,6 +5,10 @@ def get_all_restaurants():
 	result = db.session.execute(sql)
 	return result.fetchall()
 
+def get_info(restaurants_id):
+	sql = """SELECT r.name, r.phone, r.email, s.style FROM restaurants r, styles s WHERE 
+	s.restaurants_id=r.id"""
+	return db.session.execute(sql, {"restaurants_id":restaurants_id}).fetchall()
 
 def get_reviews(restaurants_id):
 	sql = """SELECT u.name, r.stars, r.comment FROM reviews r, users u WHERE r.users_id=u.id 
