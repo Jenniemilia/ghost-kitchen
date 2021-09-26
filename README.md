@@ -5,6 +5,10 @@ Ghost Kitchen on paikka, joka mahdollistaa useamman ravintolan toimimisen saman 
 Ghost Kitchenin ei myöskään tarvitse kilpailla sijainnilla, vaan tilat voidaan järjestää edullisemmalta paikalta, jolloin neliöhinnat eivät ole niin korkealla.
 Kuljetuksiin hyödynnetään alalla toimivia yhteistyökumppaneita.
 
+**2.vkon palautus**
+- Asiakas pystyy kirjautumaan tai luomaan uuden käyttäjätunnuksen sekä kirjautumana ulos
+- Etusivulta voi siirtyä ravintolan kotisivuille
+- Tietokannassa on pohja luotuna
 
 **Keskeiset toiminnot**
 
