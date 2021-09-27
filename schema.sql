@@ -5,6 +5,6 @@ CREATE TABLE styles
 CREATE TABLE users 
 	(id SERIAL PRIMARY KEY, username TEXT, password TEXT, admin BOOLEAN);
 CREATE TABLE reviews 
-	(id SERIAL PRIMARY KEY, restaurant_id INTEGER REFERENCES restaurants, user_id INTEGER REFERE>
+	(id SERIAL PRIMARY KEY, restaurant_id INTEGER REFERENCES restaurants, user_id INTEGER REFERENCES users, comment TEXT, starts INTEGER, created TIMESTAMP);
 CREATE TABLE menu 
 	(id SERIAL PRIMARY KEY, restaurant_id INTEGER REFERENCES restaurants, menu TEXT, price FLOAT);
