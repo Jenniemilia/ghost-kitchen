@@ -23,7 +23,7 @@
 	<form action="/result" method= "GET">
 	<p>Mitä tekisi tänään mieli syödä?
 
-	Etsi hakukenttästä eri vaihtoehdoja.</p>
+	Hae eri vaihtoehdoja.</p>
 	 <input type="text" name="query">
 	<br />
 	<input type="submit" value="Lähetä">
@@ -35,7 +35,7 @@
 
 	<ul>
 	{% for restaurant in restaurants %}
-		<li><a href="/restauranthomepage/{{restaurant.id}}">{{ restaurant.name }}</a>
+		<li><a href="/homepage/{{restaurant.id}}">{{ restaurant.name }}</a>
 		{% endfor %}
 	</ul>
 

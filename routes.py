@@ -3,14 +3,14 @@ from db import db
 from flask import redirect, render_template, request, session
 
 import users, restaurants
-
+ 
 
 @app.route("/")
 def index():
-	
 	return render_template("index.html", restaurants = restaurants.get_all_restaurants())
 
 
+#Lisää tarkistus onko Admin jolloin lisää toimintoja
 @app.route("/login", methods=["GET", "POST"])
 def login():
 	if request.method == "GET":
@@ -47,7 +47,7 @@ def register():
 			return render_template("error.html", message="Rekisteröinti ei onnistunut")
 
 
-
+#Ravintolan hakutoiminto, lisää vielä niin että listus toimii ja tulee näkyviin etusivulle
 @app.route("/result")
 def result():
 	query = request.args["query"]
@@ -57,8 +57,13 @@ def result():
 	restaurants = result.fetchall()
 	return render_template("result.html", restaurants=restaurants)
 
-@app.route("/restauranthomepage/<int:restaurants_id>")
-def restauranthomepage(restaurants_id):
-	info = restaurants.get_info(restaurants_id)
-	return render_template("restauranthomepage.html", restaurants_id=restaurants_id, info=info)
+@app.route("/homepage/<int:restaurant_id>")
+def homepage(restaurant_id):
+	# lisää tieto mikä ravintola
+	#id = restaurants.get_restaurant_id()
+	restaurant = restaurants.get_restaurant_info(restaurant_id)
+	menu = restaurants.get_restaurant_menu(restaurant_id)
+	info = restaurants.get_restaurant_info(restaurant_id)
+
+	return render_template("homepage.html", restaurant=restaurant, menu=menu, info=info)
 
