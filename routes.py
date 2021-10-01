@@ -51,11 +51,11 @@ def register():
 @app.route("/result")
 def result():
 	query = request.args["query"]
-	sql = """SELECT restaurants.name FROM restaurants, styles WHERE 
-	styles.restaurant_id = restaurants.id AND style LIKE :query"""
-	result = db.session.execute(sql, {"query": "%"+query+"%"})
-	restaurants = result.fetchall()
-	return render_template("result.html", restaurants=restaurants)
+	result = restaurants.get_query(query)
+
+	print(result)
+	return render_template("result.html", query=query, result = result)
+	
 
 @app.route("/homepage/<int:restaurant_id>")
 def homepage(restaurant_id):
@@ -64,6 +64,7 @@ def homepage(restaurant_id):
 	restaurant = restaurants.get_restaurant_info(restaurant_id)
 	menu = restaurants.get_restaurant_menu(restaurant_id)
 	info = restaurants.get_restaurant_info(restaurant_id)
+	print(restaurant)
 
 	return render_template("homepage.html", restaurant=restaurant, menu=menu, info=info)
 

@@ -1,9 +1,15 @@
 <!doctype html>
 
+{% extends "layout.html" %}
+
+
+{% block content %}
+
 <ul>
 <h2>Hakuasi vastaavat tulokset</h2>
-{% for result in results %}
-<li> {{ result.result }} : {result.restaurant }}
+{% for restaurant in result %}
+<li><a href="/homepage/{{restaurant.id}}">{{ restaurant.name }}</a>
 {% endfor %}
 </ul>
 
+{% endblock %}

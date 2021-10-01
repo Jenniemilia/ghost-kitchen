@@ -5,15 +5,17 @@ def get_restaurant_id():
 	return session.get("restaurant_id", 0)
 
 def get_all_restaurants():
-	sql = "SELECT id, name FROM restaurants"
+	sql = "SELECT id, name, description FROM restaurants"
 	result = db.session.execute(sql)
 	return result.fetchall()
 
+
+
 def get_restaurant_info(restaurant_id):
-	sql = """SELECT r.name, r.phone, r.email, r.description, s.style FROM restaurants r, styles s WHERE 
-	s.restaurant_id=r.id"""
+	sql = """SELECT name, phone, email, description FROM restaurants WHERE 
+	id=:restaurant_id"""
 	result = db.session.execute(sql, {"restaurant_id": restaurant_id})
-	return result.fetchall()
+	return result.fetchone()
 
 def get_reviews(restaurant_id):
 	sql = """SELECT u.name, r.stars, r.comment FROM users u, reviews r WHERE r.user_id=u.id 
@@ -28,10 +30,18 @@ def add_reviews(restaurant_id, user_id, stars, comment):
 	db.session.commit()
 
 def get_restaurant_menu(restaurant_id):
-	sql = """SELECT menu.menu, menu.price FROM restaurants, menu WHERE menu.restaurant_id= 
-	restaurant_id"""
+	sql = """SELECT menu.dish, menu.price FROM menu WHERE menu.restaurant_id= 
+	:restaurant_id"""
 	result = db.session.execute(sql, {"restaurant_id": restaurant_id})
 	return result.fetchall()
+
+
+def get_query(query): 
+	sql = """SELECT restaurants.name, restaurants.description FROM restaurants, styles WHERE 
+	styles.restaurant_id = restaurants.id AND style ILIKE :query"""
+	result = db.session.execute(sql, {"query": "%"+query+"%"})
+	result = result.fetchall()
+	return result
 
 
 
