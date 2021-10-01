@@ -5,7 +5,7 @@ def get_restaurant_id():
 	return session.get("restaurant_id", 0)
 
 def get_all_restaurants():
-	sql = "SELECT * FROM restaurants"
+	sql = "SELECT id, name FROM restaurants"
 	result = db.session.execute(sql)
 	return result.fetchall()
 

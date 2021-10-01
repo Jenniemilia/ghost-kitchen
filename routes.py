@@ -52,7 +52,7 @@ def register():
 def result():
 	query = request.args["query"]
 	sql = """SELECT restaurants.name FROM restaurants, styles WHERE 
-	styles.restaurants_id = restaurants.id AND style LIKE :query"""
+	styles.restaurant_id = restaurants.id AND style LIKE :query"""
 	result = db.session.execute(sql, {"query": "%"+query+"%"})
 	restaurants = result.fetchall()
 	return render_template("result.html", restaurants=restaurants)

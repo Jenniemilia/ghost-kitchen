@@ -1,7 +1,12 @@
 {% extends "layout.html" %}
+{% block title %}
+
+{{ restaurant.name }}
+{% endblock %}
+
 {% block content %}
 
-<h2> Tervetuloa ravintola {{ info.name }} sivuille!</2>
+<h2> Tervetuloa ravintola {{ restaurant.name }} sivuille!</h2>
 <p> Tarjoilemme {{info.description }} </p>
 
 <p>Yhteystiedot:
@@ -32,7 +37,7 @@
 
 <!--arvostelu vain kirjautuneena! -->
 {% if session.username %}
-<h2>Montako tähteä annat ravintolalle?</2>
+<h2>Montako tähteä annat ravintolalle?</h2>
 <form action="/reviews" method="POST">
 <br>
 <!-- vain kirjautuneena kommentointi -->
