@@ -21,7 +21,7 @@
 <br />
 
 	{% if session.user_id %}
-	<p>Hei {{ session.user_name }}! Mahtavaa nähdä sinut täällä!</p>
+	<h3>Hei {{ session.user_name }}! Mahtavaa nähdä sinut täällä!</h3>
 	{% else %}
 	<p>Hei, kirjautumalla sisään pääset katsomaan ravintoloiden arvosteluja sekä saat käyttöösi mahtavia etuja!</p>	
 	{% endif %}
@@ -36,14 +36,17 @@
 	<br />
 	<input type="submit" value="Lähetä">
 	</form> 
+	<br>
 
 	<p>
+
 
 	Katsele eri ravintoloiden tarjontaa:
 
 	<ul>
 	{% for restaurant in restaurants %}
-		<li><a href="/homepage/{{restaurant.id}}">{{ restaurant.name }}</a>
+		<li><a href="/homepage/{{restaurant.id}}">{{ restaurant.name }}</a><br>
+			{{ restaurant.description }}
 		{% endfor %}
 	</ul>
 
@@ -53,4 +56,8 @@
 	<a href="/login">Kirjaudu sisään</a>
 	{% endif %}
 
+	{% if session.user_role == 2 %}
+	<h3>Hei ravintoloitsija, haluatko muokata menua tai lisätä päivän tarjoukset? Kirjaudu omille sivuille niin näet lisää toimintoja</h3>
+	<a href="/ownerpage">Valitse ravintola</a>
+	{% endif %}
 {% endblock %}

@@ -7,7 +7,7 @@
 {% block content %}
 
 <h2> Tervetuloa ravintola {{ restaurant.name }} sivuille!</h2>
-<p> Tarjoilemme {{ info.description }} </p>
+<h3> Tarjoilemme {{ info.description }} </h3>
 
 <p>Yhteystiedot:
 {{ info.phone }}
@@ -39,8 +39,8 @@
 <!--arvostelu vain kirjautuneena! -->
 {% if session.user_id %}
 <p>Montako tähteä annat ravintolalle?</p>
-<form action="/reviews" method="POST">
-    Arvostelu:
+<form action="/review" method="POST">
+    Tähdet:
     <Select name="stars">
         <option value="1">1
         <option value="2">2

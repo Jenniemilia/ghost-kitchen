@@ -9,6 +9,7 @@ def index():
 	return render_template("index.html", restaurants = restaurants.get_all_restaurants())
 
 
+
 #Lisää tarkistus onko Admin jolloin lisää toimintoja
 @app.route("/login", methods=["get", "post"])
 def login():
@@ -63,18 +64,31 @@ def result():
 @app.route("/homepage/<int:restaurant_id>")
 def homepage(restaurant_id):
 	# lisää tieto mikä ravintola
-	#id = restaurants.get_restaurant_id()
+	
 	restaurant = restaurants.get_restaurant_info(restaurant_id)
 	menu = restaurants.get_restaurant_menu(restaurant_id)
 	info = restaurants.get_restaurant_info(restaurant_id)
+	reviews = restaurants.get_review(restaurant_id)
+	
 
-	return render_template("homepage.html", restaurant=restaurant, menu=menu, info=info)
+	return render_template("homepage.html", reviews= reviews, id = restaurant_id, restaurant=restaurant, menu=menu, info=info)
 
 
 @app.route("/review", methods=["post"])
 def review():
 	users.require_role(1)
-	pass
+	users.check_csrf()
+	restaurant_id=request.form["restaurant_id"]
+	stars = int(request.form["stars"])
+	if stars < 1 or stars > 5:
+		return render_template("error.html", message="Valitettavasti arvostelussa oli virheellinen määrä tähtiä, yritä uudelleen")
+
+	comment = request.form["comment"]
+	if comment == "":
+		comment = " - "
+
+	restaurants.add_review(restaurant_id, users.user_id(), stars, comment)
+	return redirect("/homepage/" + str(restaurant_id))
 
 #ravintoloitsija voi lisätä ravintoloita
 @app.route("/add", methods=["get", "post"])
