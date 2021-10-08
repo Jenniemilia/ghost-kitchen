@@ -17,8 +17,8 @@
 
 <p> Tänään meillä on listalla </p>
 <ul>
-{% for dish in menu %}
-<li> {{ dish.menu }} - {{ dish.price }}0 €</li>
+{% for portion in menu %}
+<li> {{ portion.dish }} - {{ portion.price }}0 €</li>
 {% endfor %}
 </ul>
 <!--ravintolamenut sql:stä-->
@@ -30,15 +30,24 @@
 {% endif %}
 
 <ul>
-{% for comment in reviews %}
-<li> {{ reviews.user_id }} {{ reviews.stars }} "{{reviews.comment }}"
+{% for input in reviews %}
+<li> {{ input[0] }} {{ input[1] }}/5 "{{ input[2] }}"
+    Luotu: {{ input[3].strftime("%Y-%m-%d %H:%M") }}
 {% endfor %}
 </ul>
 
 <!--arvostelu vain kirjautuneena! -->
-{% if session.username %}
-<h2>Montako tähteä annat ravintolalle?</h2>
+{% if session.user_id %}
+<p>Montako tähteä annat ravintolalle?</p>
 <form action="/reviews" method="POST">
+    Arvostelu:
+    <Select name="stars">
+        <option value="1">1
+        <option value="2">2
+        <option value="3">3
+        <option value="4">4
+        <option value="5">5
+    </Select>
 <br>
 <!-- vain kirjautuneena kommentointi -->
 <p> Jätä arvostelu
@@ -46,12 +55,13 @@
 <textarea name="comment" rows="4" cols="35" maxlength="1000"></textarea>
 <p><input type="submit" value="Lähetä">
 <input type="hidden" name="restaurant_id" value="{{ id }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% endif %}
 
 
 </p>
 
-<a href="/">Palaa etusivulle</a>
+<a href="/">Palaa takaisin etusivulle</a>
 
 {% endblock %}

@@ -20,8 +20,11 @@
 
 <br />
 
-	{% if session.username %}
-	<p>Hei {{ session.username }}! Mahtavaa nähdä sinut täällä!</p>
+	{% if session.user_id %}
+	<p>Hei {{ session.user_name }}! Mahtavaa nähdä sinut täällä!</p>
+	{% else %}
+	<p>Hei, kirjautumalla sisään pääset katsomaan ravintoloiden arvosteluja sekä saat käyttöösi mahtavia etuja!</p>	
+	{% endif %}
 
 
 
@@ -44,6 +47,7 @@
 		{% endfor %}
 	</ul>
 
+	{% if session.user_id %}
 	<a href="/logout">Kirjaudu ulos</a>
 	{% else %}
 	<a href="/login">Kirjaudu sisään</a>
