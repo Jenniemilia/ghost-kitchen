@@ -57,7 +57,17 @@
 	{% endif %}
 
 	{% if session.user_role == 2 %}
-	<h3>Hei ravintoloitsija, haluatko muokata menua tai lisätä päivän tarjoukset? Kirjaudu omille sivuille niin näet lisää toimintoja</h3>
-	<a href="/ownerpage">Valitse ravintola</a>
+	<p>Hei ravintoloitsija, haluatko muokata menua tai lisätä päivän tarjoukset? Kirjaudu omille sivuille niin näet lisää toimintoja</p>
+	<div class="dropdown">
+		<button type="button bg-light" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+		  Valitse Ravintola
+		</button>
+		<ul class="dropdown-menu">
+			{% for restaurant in restaurants %}
+		  	<li><a class="dropdown-item" href="/ownerpage/{{restaurant.id}}">{{ restaurant.name }}</a></li>
+			  {% endfor %}
+		  
+		</ul>
+	  </div>
 	{% endif %}
 {% endblock %}
