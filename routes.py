@@ -63,8 +63,6 @@ def result():
 
 @app.route("/homepage/<int:restaurant_id>")
 def homepage(restaurant_id):
-	# lisää tieto mikä ravintola
-	
 	restaurant = restaurants.get_restaurant_info(restaurant_id)
 	menu = restaurants.get_restaurant_menu(restaurant_id)
 	info = restaurants.get_restaurant_info(restaurant_id)
@@ -79,6 +77,14 @@ def ownerpage(restaurant_id):
 	info = restaurants.get_restaurant_info(restaurant_id)
 
 	return render_template("ownerpage.html", id = restaurant_id, restaurant=restaurant, menu=menu, info=info)
+
+
+@app.route("/userpage<int:user_id>")
+def userpage(user_id):
+	user = users.get_user_info(user_id)
+
+	return render_template("userpage", id=user_id, user= user)
+	pass
 
 
 @app.route("/review", methods=["post"])

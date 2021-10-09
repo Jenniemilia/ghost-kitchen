@@ -43,5 +43,9 @@ def require_role(role):
     if role > session.get("user_role", 0):
         abort(403)
 
+def get_user_info():
+    sql = "SELECT password, id, name FROM users WHERE name=:name"
+    result = db.session.execute(sql, {"name":name})
+    pass
 
 

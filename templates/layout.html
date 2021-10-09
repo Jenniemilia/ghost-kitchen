@@ -1,14 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 
 <head>
+  {% block head %}
     <!--required meta tags-->
-    <meta name= "viewport" content="width=device-width, initial-scale=1.0">
+    <meta name= "viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta charset="utf-8">
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/static/styles.css">
     
     <!--Title-->
     <title>Ghost Kitchen -
@@ -16,18 +18,18 @@
     
             {% endblock %}
     </title>
-
+    {% endblock %}
 
 </head>
 
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-          <!--<a class="navbar-brand" href="#">Ghost Kitchen</a>-->
-          <img src="/static/logo.png" alt="Logo">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Ghost Kitchen</a>
+          
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-i#con"></span>
+            <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -37,8 +39,11 @@
               </li>
             </ul>
 
-            <ul class="navbar-nav">
+            <ul class="navbar-nav navbar-right">
               {% if session.user_id %}
+              <li class="nav-item">
+                <a class="nav-link" href="/userpage">Omat tiedot</a>
+            </li>
               <li class="nav-item">
                 <a class="nav-link" href="/logout">Kirjaudu ulos</a>
             </li>
@@ -67,10 +72,13 @@
 <h1>Ghost Kitchen</h1>
 
 <!--Footer-->
-<footer>
-  <p>Author: Ghost Kitchen<br>
-  </p>
+<footer class="container-fluid text-center">
+  <a href="/" title="To Top">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a>
+  <p>Ghost Kitchen Theme Made By jenniemilia</p>
 </footer>
+
 
 
 <!-- Optional JavaScript; choose one of the two! -->
@@ -94,16 +102,7 @@
 
 </body>
 
-<style>
-  body {
-    margin: auto;
-    max-height: fit-content;
-    background-color: lightseagreen;
-    color: white
-  }
-  
-  
-  </style>
+
 
 
 

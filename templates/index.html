@@ -1,73 +1,84 @@
 {% extends "layout.html" %}
+<head>
 {% block title %}
-	Kotisivu
-
-{% endblock %}
+	Kotisivu {% endblock %}
+	</head>
 
 {% block content %}
 
+<body>	
 
+<div class="jumbotron text-center">
+	<img src="/static/logo.png" alt="Logo">
+	<h1>Tervetuloa tilamaan maistuvaa ruokaa!</h1>
+	<h3>Suoraan kotiovelle</h3>
+</div>
 
-	<h2>Tervetuloa tilamaan maistuvaa ruokaa!</h2>
+<div class="container">
+	<div class="row">
+		<div class="col-4">
 
-	<h2>Päivän tarjoukset</h2>
-	<!-- Tee random joka arpoo kolme päivän annosta tarjoukseen -->
-	<ul>
-		<li>Kalakeitto
-		<li>Lounasburgeri + ranskalaiset
-		<li>Kikhernecurry
-	</ul>
-
-<br />
-
-	{% if session.user_id %}
-	<h3>Hei {{ session.user_name }}! Mahtavaa nähdä sinut täällä!</h3>
-	{% else %}
-	<p>Hei, kirjautumalla sisään pääset katsomaan ravintoloiden arvosteluja sekä saat käyttöösi mahtavia etuja!</p>	
-	{% endif %}
-
-
-
-	<form action="/result" method= "GET">
-	<p>Mitä tekisi tänään mieli syödä?
-
-	Hae eri vaihtoehdoja.</p>
-	 <input type="text" name="query">
-	<br />
-	<input type="submit" value="Lähetä">
-	</form> 
-	<br>
-
-	<p>
-
-
-	Katsele eri ravintoloiden tarjontaa:
-
-	<ul>
-	{% for restaurant in restaurants %}
-		<li><a href="/homepage/{{restaurant.id}}">{{ restaurant.name }}</a><br>
-			{{ restaurant.description }}
-		{% endfor %}
-	</ul>
-
-	{% if session.user_id %}
-	<a href="/logout">Kirjaudu ulos</a>
-	{% else %}
-	<a href="/login">Kirjaudu sisään</a>
-	{% endif %}
-
-	{% if session.user_role == 2 %}
-	<p>Hei ravintoloitsija, haluatko muokata menua tai lisätä päivän tarjoukset? Kirjaudu omille sivuille niin näet lisää toimintoja</p>
-	<div class="dropdown">
-		<button type="button bg-light" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-		  Valitse Ravintola
-		</button>
-		<ul class="dropdown-menu">
-			{% for restaurant in restaurants %}
-		  	<li><a class="dropdown-item" href="/ownerpage/{{restaurant.id}}">{{ restaurant.name }}</a></li>
-			  {% endfor %}
-		  
+		<h2>Päivän tarjoukset</h2>
+		<!-- Tee random joka arpoo kolme päivän annosta tarjoukseen -->
+		<ul>
+			<li>Kalakeitto
+			<li>Burgeri + ranskalaiset
+			<li>Kikhernecurry
 		</ul>
+
+	<br />
+
+		<h2>Ilmainen kuljetus</h2>
+		<ul>
+			<li>Salad Bar</li>
+			<li>El Estella</li>
+		</ul>
+	</div>
+
+		<div class="col-8">
+
+			{% if session.user_id %}
+			<h3>Hei {{ session.user_name }}! Mahtavaa nähdä sinut täällä!</h3>
+			{% else %}
+			<p>Hei, kirjautumalla sisään pääset katsomaan ravintoloiden arvosteluja sekä saat käyttöösi mahtavia etuja!</p>	
+			{% endif %}
+
+
+
+			<form action="/result" method= "GET">
+			<p>Mitä tekisi tänään mieli syödä?</p>
+
+			<p>Hae eri vaihtoehdoja.</p>
+	 		<input type="text" name="query">
+			<br />
+			<input type="submit" value="Lähetä">
+			</form> 
+			<br>
+
+			<p>Katsele eri ravintoloiden tarjontaa:
+
+			<ul>
+			{% for restaurant in restaurants %}
+				<li><a href="/homepage/{{restaurant.id}}">{{ restaurant.name }}</a><br>
+				{{ restaurant.description }}
+				{% endfor %}
+			</ul>
+
+			{% if session.user_role == 2 %}
+			<p>Hei ravintoloitsija, haluatko muokata menua tai lisätä päivän tarjoukset? Kirjaudu omille sivuille niin näet lisää toimintoja</p>
+			<div class="dropdown">
+			<button type="button bg-light" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+		  	Valitse Ravintola
+			</button>
+			<ul class="dropdown-menu">
+				{% for restaurant in restaurants %}
+		  		<li><a class="dropdown-item" href="/ownerpage/{{restaurant.id}}">{{ restaurant.name }}</a></li>
+			  	{% endfor %}
+			{% endif %}
+		  
+			</ul>
+	  	</div>
 	  </div>
-	{% endif %}
+	</body>
+	
 {% endblock %}

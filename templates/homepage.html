@@ -1,45 +1,40 @@
 {% extends "layout.html" %}
-{% block title %}
-
+<head>{% block title %}
 {{ restaurant.name }}
-{% endblock %}
+{% endblock %} </head>
 
 {% block content %}
 
-<h2> Tervetuloa ravintola {{ restaurant.name }} sivuille!</h2>
-<h3> Tarjoilemme {{ info.description }} </h3>
+<body>
 
-<p>Yhteystiedot:
-{{ info.phone }}
-{{ info.email }} </p>
+<div class="jumbotron text-center">
+    <h2> Tervetuloa ravintola {{ restaurant.name }} sivuille!</h2>
+    <h3> Tarjoilemme {{ info.description }} </h3>
+</div>
 
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+        <p>Yhteystiedot: <br>
 
+        <i class="bi bi-telephone-fill"></i> {{ info.phone }} <br>
+        <i class="bi bi-envelope-open-fill"></i> {{ info.email }} </p>
+        </div>
+    </div>
 
-<p> Tänään meillä on listalla </p>
-<ul>
-{% for portion in menu %}
-<li> {{ portion.dish }} - {{ portion.price }}0 €</li>
-{% endfor %}
-</ul>
-<!--ravintolamenut sql:stä-->
+    <div class="col-9"> 
 
-
-
-{% if reviews %}
-<h3>Lue muiden jättämiä arvosteluita</h3>
-{% endif %}
-
-<ul>
-{% for input in reviews %}
-<li> {{ input[0] }} {{ input[1] }}/5 "{{ input[2] }}"
-    Luotu: {{ input[3].strftime("%Y-%m-%d %H:%M") }}
-{% endfor %}
-</ul>
+    <h2> MENU </h2>
+    <ul>
+        {% for portion in menu %}
+        <li> {{ portion.dish }} - {{ portion.price }}0 €  <i class="bi bi-basket"></i></li> 
+        {% endfor %}
+    </ul>
 
 <!--arvostelu vain kirjautuneena! -->
-{% if session.user_id %}
-<p>Montako tähteä annat ravintolalle?</p>
-<form action="/review" method="POST">
+    {% if session.user_id %}
+    <p>Montako tähteä annat ravintolalle?</p>
+    <form action="/review" method="POST">
     Tähdet:
     <Select name="stars">
         <option value="1">1
@@ -48,20 +43,32 @@
         <option value="4">4
         <option value="5">5
     </Select>
-<br>
+    <br>
 <!-- vain kirjautuneena kommentointi -->
-<p> Jätä arvostelu
-<br>
-<textarea name="comment" rows="4" cols="35" maxlength="1000"></textarea>
-<p><input type="submit" value="Lähetä">
-<input type="hidden" name="restaurant_id" value="{{ id }}">
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
-{% endif %}
+    <p> Jätä arvostelu
+    <br>
+    <textarea name="comment" rows="4" cols="35" maxlength="1000"></textarea>
+    <p><input type="submit" value="Lähetä">
+    <input type="hidden" name="restaurant_id" value="{{ id }}">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    </form>
+    {% endif %}
+</div>
 
+    <div class="4">
+        {% if reviews %}
+        <h3>Lue muiden jättämiä arvosteluita</h3>
+        {% endif %}
 
-</p>
+        <ul>
+        {% for input in reviews %}
+            <li> {{ input[0] }} {{ input[1] }}/5 "{{ input[2] }}"
+            Luotu: {{ input[3].strftime("%Y-%m-%d %H:%M") }}
+            {% endfor %}
+        </ul>
+    </p>
+</div>
 
-<a href="/">Palaa takaisin etusivulle</a>
+<a button type="button" class="btn" href="/">Palaa etusivulle</a>
 
 {% endblock %}
