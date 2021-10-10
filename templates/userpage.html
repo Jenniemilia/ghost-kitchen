@@ -3,3 +3,14 @@
 
 {{ user.name }}
 {% endblock %}
+
+{% if session.user_id %}
+<p>Olet kirjautunut sisään nimellä : {{ session.user_name }}
+    </p>
+    {% endif %}
+
+# Omat suosikit:
+
+#Alennuskupongit:
+
+# Vaihda salasana:

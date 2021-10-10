@@ -8,15 +8,12 @@
 
 <body>	
 
-<div class="jumbotron text-center">
-	<img src="/static/logo.png" alt="Logo">
-	<h1>Tervetuloa tilamaan maistuvaa ruokaa!</h1>
-	<h3>Suoraan kotiovelle</h3>
-</div>
+
 
 <div class="container">
 	<div class="row">
 		<div class="col-4">
+
 
 		<h2>Päivän tarjoukset</h2>
 		<!-- Tee random joka arpoo kolme päivän annosta tarjoukseen -->
@@ -44,9 +41,10 @@
 			{% endif %}
 
 
-
+			{% if session.user_role == 1 %}
 			<form action="/result" method= "GET">
 			<p>Mitä tekisi tänään mieli syödä?</p>
+
 
 			<p>Hae eri vaihtoehdoja.</p>
 	 		<input type="text" name="query">
@@ -55,16 +53,7 @@
 			</form> 
 			<br>
 
-			<p>Katsele eri ravintoloiden tarjontaa:
-
-			<ul>
-			{% for restaurant in restaurants %}
-				<li><a href="/homepage/{{restaurant.id}}">{{ restaurant.name }}</a><br>
-				{{ restaurant.description }}
-				{% endfor %}
-			</ul>
-
-			{% if session.user_role == 2 %}
+			{% elif session.user_role == 2 %}
 			<p>Hei ravintoloitsija, haluatko muokata menua tai lisätä päivän tarjoukset? Kirjaudu omille sivuille niin näet lisää toimintoja</p>
 			<div class="dropdown">
 			<button type="button bg-light" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
@@ -77,6 +66,21 @@
 			{% endif %}
 		  
 			</ul>
+		</p>
+			<br>
+
+			
+
+			<p>Katsele eri ravintoloiden tarjontaa:
+
+			<ul>
+			{% for restaurant in restaurants %}
+				<li><a href="/homepage/{{restaurant.id}}"><strong>{{ restaurant.name }}<strong></strong></a><br>
+				{{ restaurant.description }}
+				{% endfor %}
+			</ul>
+
+			
 	  	</div>
 	  </div>
 	</body>

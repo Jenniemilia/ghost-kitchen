@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 {% extends "layout.html" %}
 <head>{% block title %}
 {{ restaurant.name }}
@@ -14,8 +16,8 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-6">
-        <p>Yhteystiedot: <br>
+        <div class="col-9">
+        <p><strong>Yhteystiedot:</strong> <br>
 
         <i class="bi bi-telephone-fill"></i> {{ info.phone }} <br>
         <i class="bi bi-envelope-open-fill"></i> {{ info.email }} </p>
@@ -24,12 +26,13 @@
 
     <div class="col-9"> 
 
-    <h2> MENU </h2>
+    <h2><strong>MENU</strong></h2>
+    <h5>
     <ul>
         {% for portion in menu %}
         <li> {{ portion.dish }} - {{ portion.price }}0 €  <i class="bi bi-basket"></i></li> 
         {% endfor %}
-    </ul>
+    </ul></h5>
 
 <!--arvostelu vain kirjautuneena! -->
     {% if session.user_id %}

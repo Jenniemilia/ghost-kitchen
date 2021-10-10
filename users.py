@@ -18,8 +18,10 @@ def login(name, password):
         return True
     return False
 
-def user_id():
-    return session.get("user_id", 0)
+def get_all_users():
+    sql = "SELECT id, name, password FROM users"
+    result = db.session.execute(sql)
+    return result.fetchall()
 
 def logout():
     del session["user_name"], session["user_id"], session["user_role"], session["csrf_token"]
@@ -43,9 +45,9 @@ def require_role(role):
     if role > session.get("user_role", 0):
         abort(403)
 
-def get_user_info():
-    sql = "SELECT password, id, name FROM users WHERE name=:name"
-    result = db.session.execute(sql, {"name":name})
-    pass
+def get_user_info(user_id):
+    sql = "SELECT name, password FROM users WHERE id=:user_id"
+    result = db.session.execute(sql, {"user_id":user_id})
+    return result.fetchone()
 
 

@@ -34,9 +34,15 @@ def get_restaurant_menu(restaurant_id):
 	result = db.session.execute(sql, {"restaurant_id": restaurant_id})
 	return result.fetchall()
 
+def get_menu_id(restaurant_id):
+	sql="""SELECT menu.id, menu.dish, menu.price FROM menu WHERE menu.restaurant_id=
+	:restaurant_id"""
+	result = db.session.execute(sql, {"restaurant_id": restaurant_id})
+	return result.fetchall()
+
 
 def get_query(query): 
-	sql = """SELECT restaurants.name, restaurants.description FROM restaurants, styles WHERE 
+	sql = """SELECT restaurants.id, restaurants.name, restaurants.description FROM restaurants, styles WHERE 
 	styles.restaurant_id = restaurants.id AND style ILIKE :query"""
 	result = db.session.execute(sql, {"query": "%"+query+"%"})
 	result = result.fetchall()
@@ -46,10 +52,13 @@ def get_query(query):
 def add_restaurant():
 	pass
 
-def remove_restaurant():
-	pass
+def remove_dish(menu_id):
+	sql = "UPDATE menu SET visible=FALSE WHERE menu_id=:portion.id"
+	db.session.execute(sql, {"menu_id":menu_id})
+	db.session.commit()
+	
 
 def daily_meals():
 	pass
-	#Lisää tähän random joka arpoo päivän tarjoukset -->
+#Lisää tähän random joka arpoo päivän tarjoukset
 

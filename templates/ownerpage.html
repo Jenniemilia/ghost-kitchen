@@ -7,14 +7,41 @@
 
 {% block content %}
 
+<h3>Tulit ravintola {{ restaurant.name }} sivuille</h3>
 
-<p> Valitse valikosta mitä haluat tehdä</p>
+
+<h4> Valitse valikosta mitä haluat tehdä</h4>
+
+<form action="/remove" method="post">
 
 <!-- Muokkaa menua-->
+
+<p>Minkä annoksen haluat poistaa?</p>
+
+{% for portion in menu %}
+<input type="radio" name="menu_id" value="{{ portion.id }}"> {{ portion.dish }} <br>
+
+{% endfor %}
+<p>
+<input type="submit" value="Poista">
+<input type="hidden" name="restaurant_id" value="{{ id }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</p>
+</form>
+
+<p>Lisää annos</p>
+
+<p>Ravintolan saamat arvostelut</p>
+
+
+
+
 
 <!-- Poista ravintola -->
 
 <!-- Lisää tarjous-->
+
+<!-- Muuta yhteystietoja-->
 
 
 {% endblock %}

@@ -8,7 +8,9 @@
 <ul>
 <h2>Hakuasi vastaavat tulokset</h2>
 {% for restaurant in result %}
-    <li><a href="/homepage/{{restaurant.id}}">{{ restaurant.name }}</a>
+    <li><a href="/homepage/{{ restaurant.id }}">{{ restaurant.name }}</a><br>
+    {{ restaurant.description }}    
+    
     {% endfor %}
 </ul>
 

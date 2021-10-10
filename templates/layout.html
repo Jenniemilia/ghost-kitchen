@@ -42,7 +42,7 @@
             <ul class="navbar-nav navbar-right">
               {% if session.user_id %}
               <li class="nav-item">
-                <a class="nav-link" href="/userpage">Omat tiedot</a>
+                <a class="nav-link" href="/userpage/{{session.user_id}}">Omat tiedot</a>
             </li>
               <li class="nav-item">
                 <a class="nav-link" href="/logout">Kirjaudu ulos</a>
@@ -65,7 +65,16 @@
         </div>
       </nav>
 
+      <div class="jumbotron text-center">
+        <img src="/static/logo.png" alt="Logo">
+        <h1>Tervetuloa tilamaan maistuvaa ruokaa!</h1>
+        <h3>Suoraan kotiovelle</h3>
+      </div>
+      </body>
+
         {% block content %}
+
+      
 
         {% endblock %}
 

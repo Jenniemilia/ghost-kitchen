@@ -6,9 +6,7 @@ import users, restaurants
 
 @app.route("/")
 def index():
-	return render_template("index.html", restaurants = restaurants.get_all_restaurants())
-
-
+	return render_template("index.html", users = users.get_all_users(), restaurants = restaurants.get_all_restaurants())
 
 #Lisää tarkistus onko Admin jolloin lisää toimintoja
 @app.route("/login", methods=["get", "post"])
@@ -20,18 +18,12 @@ def login():
 		password = request.form["password"]
 		if users.login(username, password):
 			return redirect("/")
-	return render_template("error.html", message="Väärä käyttäjätunnus tai salasana")
-			
-	
-		
-			
+	return render_template("error.html", message="Väärä käyttäjätunnus tai salasana")			
 
 @app.route("/logout")
 def logout():
     users.logout()
     return redirect("/")
-
-
 
 @app.route("/register", methods=["get","post"])
 def register():
@@ -56,6 +48,7 @@ def register():
 #Ravintolan hakutoiminto, lisää vielä niin että listus toimii ja tulee näkyviin etusivulle
 @app.route("/result")
 def result():
+
 	query = request.args["query"]
 	result = restaurants.get_query(query)
 	return render_template("result.html", query=query, result = result)
@@ -73,20 +66,26 @@ def homepage(restaurant_id):
 @app.route("/ownerpage/<int:restaurant_id>")
 def ownerpage(restaurant_id):
 	restaurant = restaurants.get_restaurant_info(restaurant_id)
-	menu = restaurants.get_restaurant_menu(restaurant_id)
-	info = restaurants.get_restaurant_info(restaurant_id)
+	#menu= restaurants.get_restaurant_menu(restaurant_id)
+	menu = restaurants.get_menu_id(restaurant_id)
+	return render_template("ownerpage.html", id = restaurant_id, menu=menu, restaurant=restaurant)
 
-	return render_template("ownerpage.html", id = restaurant_id, restaurant=restaurant, menu=menu, info=info)
+@app.route("/remove", methods=["post"])
+def remove_dish():
+	users.require_role(2)
+	users.check_csrf()
+	restaurant_id=request.form["restaurant_id"]
+	menu_id=request.form["menu_id"]
+	restaurants.remove_dish(menu_id)
+	return redirect("/ownerpage/" + str(restaurant_id))
 
 
-@app.route("/userpage<int:user_id>")
+@app.route("/userpage/<int:user_id>")
 def userpage(user_id):
 	user = users.get_user_info(user_id)
 
-	return render_template("userpage", id=user_id, user= user)
-	pass
-
-
+	return render_template("userpage.html", user= user)
+	
 @app.route("/review", methods=["post"])
 def review():
 	users.require_role(1)
@@ -109,9 +108,5 @@ def add_restaurant():
 	users.require_role(2)
 	pass
 
-@app.route("/remove", methods=["get", "post"])
-def remove_restaurant():
-	users.require_role(2)
-	pass
 
 
