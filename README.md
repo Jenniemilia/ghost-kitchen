@@ -7,7 +7,7 @@ Kuljetuksiin hyödynnetään alalla toimivia yhteistyökumppaneita.
 
 https://ghost-kitchen.herokuapp.com/
 
-**3.vkon palautus**
+**3. palautus**
 - Asiakas pystyy kirjautumaan tai luomaan uuden käyttäjätunnuksen sekä kirjautumaan ulos
 - Ravintoloitsija pystyy kirjautumaan tai luomaan uuden käyttäjätunnuksen admin oikeuksilla
 - Etusivulta voi siirtyä ravintolan kotisivuille
