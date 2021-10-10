@@ -4,6 +4,9 @@ from db import db
 from flask import session, abort, request
 from werkzeug.security import check_password_hash, generate_password_hash
 
+def user_id():
+    return session.get("user_id", 0)
+
 def login(name, password):
     sql = "SELECT password, id, role FROM users WHERE name=:name"
     result = db.session.execute(sql, {"name":name})
