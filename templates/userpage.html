@@ -4,13 +4,25 @@
 {{ user.name }}
 {% endblock %}
 
-{% if session.user_id %}
-<p>Olet kirjautunut sisään nimellä : {{ session.user_name }}
-    </p>
-    {% endif %}
+{% block content %}
 
-# Omat suosikit:
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                {% if session.user_id %}
+                <p>Olet kirjautunut sisään nimellä : {{ user.name }}
+                    </p>
+                    {% endif %}
 
-#Alennuskupongit:
+                # Omat suosikit:
 
-# Vaihda salasana:
+                #Alennuskupongit:
+
+                # Vaihda salasana:
+                </div>
+
+
+            </body>
+
+            {% endblock %}

@@ -14,62 +14,68 @@
     <h3> Tarjoilemme {{ info.description }} </h3>
 </div>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-9">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8">
+
+            <h2><strong>MENU</strong></h2>
+            <h6>
+            <ul>
+            {% for portion in menu %}
+                <li> {{ portion.dish }} - {{ portion.price }}0 €  <i class="bi bi-basket"></i></li> 
+                {% endfor %}
+             </ul></h6>
+        </div>
+
+        <div class="col-sm-4">
         <p><strong>Yhteystiedot:</strong> <br>
 
-        <i class="bi bi-telephone-fill"></i> {{ info.phone }} <br>
-        <i class="bi bi-envelope-open-fill"></i> {{ info.email }} </p>
+            <i class="bi bi-telephone-fill"></i> {{ info.phone }} <br>
+            <i class="bi bi-envelope-open-fill"></i> {{ info.email }} </p>
         </div>
     </div>
-
-    <div class="col-9"> 
-
-    <h2><strong>MENU</strong></h2>
-    <h5>
-    <ul>
-        {% for portion in menu %}
-        <li> {{ portion.dish }} - {{ portion.price }}0 €  <i class="bi bi-basket"></i></li> 
-        {% endfor %}
-    </ul></h5>
-
-<!--arvostelu vain kirjautuneena! -->
-    {% if session.user_id %}
-    <p>Montako tähteä annat ravintolalle?</p>
-    <form action="/review" method="POST">
-    Tähdet:
-    <Select name="stars">
-        <option value="1">1
-        <option value="2">2
-        <option value="3">3
-        <option value="4">4
-        <option value="5">5
-    </Select>
-    <br>
-<!-- vain kirjautuneena kommentointi -->
-    <p> Jätä arvostelu
-    <br>
-    <textarea name="comment" rows="4" cols="35" maxlength="1000"></textarea>
-    <p><input type="submit" value="Lähetä">
-    <input type="hidden" name="restaurant_id" value="{{ id }}">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    </form>
-    {% endif %}
 </div>
 
-    <div class="4">
-        {% if reviews %}
-        <h3>Lue muiden jättämiä arvosteluita</h3>
-        {% endif %}
+<div class="container-fluid bg-light">
+    <div class="row">
+        <div class="col-sm-10">   
+        <!--arvostelu vain kirjautuneena! -->
+            {% if session.user_id %}
+            <p>Montako tähteä annat ravintolalle?</p>
+            <form action="/review" method="POST">
+            Tähdet:
+            <Select name="stars">
+                <option value="1">1
+                <option value="2">2
+                <option value="3">3
+                <option value="4">4
+                <option value="5">5
+            </Select>
+            <br>
+        <!-- vain kirjautuneena kommentointi -->
+            <p> Jätä arvostelu
+            <br>
+            <textarea name="comment" rows="4" cols="35" maxlength="1000"></textarea>
+            <p><input type="submit" value="Lähetä">
+            <input type="hidden" name="restaurant_id" value="{{ id }}">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            </form>
+            {% endif %}
+        
 
-        <ul>
-        {% for input in reviews %}
-            <li> {{ input[0] }} {{ input[1] }}/5 "{{ input[2] }}"
-            Luotu: {{ input[3].strftime("%Y-%m-%d %H:%M") }}
-            {% endfor %}
-        </ul>
-    </p>
+            {% if reviews %}
+            <h3>Lue muiden jättämiä arvosteluita</h3>
+            {% endif %}
+
+            <ul>
+            {% for input in reviews %}
+                <li> {{ input[0] }} {{ input[1] }}/5 "{{ input[2] }}"
+                Luotu: {{ input[3].strftime("%Y-%m-%d %H:%M") }}
+                {% endfor %}
+            </ul>
+            </p>
+        </div>
+    </div>
 </div>
 
 <a button type="button" class="btn" href="/">Palaa etusivulle</a>
