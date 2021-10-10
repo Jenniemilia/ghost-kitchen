@@ -1,34 +1,41 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h2>Rekisteröityminen</h2>
-<p>Hei! Mahtavaa nähdä että olet päättänyt rekisteröityä palveluidemme käyttäjäksi.
-    <br />
-    Kiitokseksi siitä, saat rekisteröitymisen yhteydessä alennuskoodin ensimmäiseen tilaukseesi.
+<div class="container-fluid bg-light">
+    <div class="row">
+        <div class="col-sm-10">   
 
-</p>
-<br />
+            <h2>Rekisteröityminen</h2>
+            <p>Hei! Mahtavaa nähdä että olet päättänyt rekisteröityä palveluidemme käyttäjäksi.
+                <br />
+                Kiitokseksi siitä, saat rekisteröitymisen yhteydessä alennuskoodin ensimmäiseen tilaukseesi.
 
-<form action="/register" method="POST">
-Tunnus: <br>
-<input type="text" name="username" minlenght="3" maxlength="25">
-<p>
-Salasana: <br>
-<input type="password" name="password1">
-<p>
-Syötä salasana uudelleen: <br> 
-<input type="password" name="password2">
-<p>
-Käyttäjä:
-<select name="role">
-    <option value= 1> Asiakas
-    <option value= 2> Ravintoloitsija
-</select>
-<p>
-<input type="submit" value="Luo tunnus">
-</form>
+            </p>
+            <br />
 
-</p>
+            <form action="/register" method="POST">
+            Tunnus: <br>
+            <input type="text" name="username" minlenght="3" maxlength="25">
+            <p>
+            Salasana: <br>
+            <input type="password" name="password1">
+            <p>
+            Syötä salasana uudelleen: <br> 
+            <input type="password" name="password2">
+            <p>
+            Käyttäjä:
+            <select name="role">
+                <option value= 1> Asiakas
+                <option value= 2> Ravintoloitsija
+            </select>
+            <p>
+            <input type="submit" value="Luo tunnus">
+            </form>
+
+            </p>
+        </div>
+    </div>
+</div>
 
 
 

@@ -1,0 +1,31 @@
+body {
+    font: 400 15px Lato, sans-serif;
+    line-height: 1.8;
+    margin-left: auto;
+
+    max-height: fit-content;
+    background-color: lightgray;
+    color: black;
+  }
+
+
+.jumbotron {
+    background-color: lightseagreen;
+    color: white;
+    padding: 60px 25px;
+    font-family: Montserrat, sans-serif;
+}
+
+.container-fluid {
+    padding: 60px 50px
+}
+
+
+
+  
+  
+.footer .glyphicon {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #f4511e;
+  }
