@@ -50,6 +50,8 @@ def register():
 def result():
 
 	query = request.args["query"]
+	if len(query) < 1 or len(query) > 15:
+		return render_template("error.html", message = "Hakusanassa on oltava vähintään yksi kirjain, koita uudestaan!")
 	result = restaurants.get_query(query)
 	return render_template("result.html", query=query, result = result)
 	
