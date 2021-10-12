@@ -7,10 +7,16 @@ Kuljetuksiin hyödynnetään alalla toimivia yhteistyökumppaneita.
 
 https://ghost-kitchen.herokuapp.com/
 
-**2.vkon palautus**
-- Asiakas pystyy kirjautumaan tai luomaan uuden käyttäjätunnuksen sekä kirjautumana ulos
+**3. palautus**
+- Asiakas pystyy kirjautumaan tai luomaan uuden käyttäjätunnuksen sekä kirjautumaan ulos
+- Ravintoloitsija pystyy kirjautumaan tai luomaan uuden käyttäjätunnuksen admin oikeuksilla
 - Etusivulta voi siirtyä ravintolan kotisivuille
-- Tietokannassa on pohja luotuna
+- Etusivulla on hakutoiminto, josta asiakas voi hakea eri ravintoloita hakusanoilla kuten thai, vegaani, sushi jne.
+- Ravintoloitsija pystyy valitsemaan ravintolan jonka tietoja haluaa muokata
+    - Kesken: annoksen lisäys ja poisto, ravintolan tietojen muokkaus sekä asiattomien kommentien poisto
+- Asiakas pystyy menemään omille sivuilleen
+    - Kesken omat kommentit ja suosikit
+   
 
 **Keskeiset toiminnot**
 
