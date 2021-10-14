@@ -36,6 +36,17 @@
 
                 <p>Lisää annos</p>
 
+                <form action="/newdish" method="post">
+                <p>Annoksen nimi: </p>
+                <textarea name="dish" rows="3" cols="40" maxlenght="100"></textarea>
+                <p>Annoksen hinta: </p> 
+                <textarea name="price" rows="3" cols="40" maxlenght="100"></textarea>
+                <input type="submit" value="Lähetä">
+                <input type="hidden" name="restaurant_id" value="{{ id }}">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                </form>
+                
+
                 <p>Ravintolan saamat arvostelut</p>
             </div>
         </div>

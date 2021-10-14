@@ -77,13 +77,26 @@ def remove_dish():
 	users.require_role(2)
 	users.check_csrf()
 	restaurant_id=request.form["restaurant_id"]
-	menu_id=request.form["menu_id"]
+	menu_id=request.form["portion.id"]
 	restaurants.remove_dish(menu_id)
 	return redirect("/ownerpage/" + str(restaurant_id))
+
+@app.route("/newdish", methods=["post"])
+def new_dish():
+	users.require_role(2)
+	users.check_csrf()
+	restaurant_id=request.form["restaurant_id"]
+	dish=request.form["dish"]
+	price=request.form["price"]
+	visible= "TRUE"
+	restaurants.add_dish(restaurant_id, dish, price, visible)
+	return redirect("/")
+
 
 
 @app.route("/userpage/<int:user_id>")
 def userpage(user_id):
+	user_id = users.user_id() 
 	user = users.get_user_info(user_id)
 
 	return render_template("userpage.html", user= user)

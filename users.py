@@ -49,7 +49,7 @@ def require_role(role):
         abort(403)
 
 def get_user_info(user_id):
-    sql = "SELECT name, password FROM users WHERE id=:user_id"
+    sql = "SELECT name FROM users WHERE id=:user_id"
     result = db.session.execute(sql, {"user_id":user_id})
     return result.fetchone()
 
