@@ -6,9 +6,9 @@ import users, restaurants
 
 @app.route("/")
 def index():
-	return render_template("index.html", users = users.get_all_users(), restaurants = restaurants.get_all_restaurants())
+	top_rated = restaurants.get_top_review()
+	return render_template("index.html", users = users.get_all_users(), restaurants = restaurants.get_all_restaurants(), top_rated=top_rated)
 
-#Lisää tarkistus onko Admin jolloin lisää toimintoja
 @app.route("/login", methods=["get", "post"])
 def login():
 	if request.method == "GET":
@@ -45,10 +45,8 @@ def register():
 			return render_template("error.html", message="Rekisteröinti ei jostain syystä onnistunut, yritä uudelleen")
 	return redirect("/")
 
-#Ravintolan hakutoiminto, lisää vielä niin että listus toimii ja tulee näkyviin etusivulle
 @app.route("/result")
 def result():
-
 	query = request.args["query"]
 	if len(query) < 1 or len(query) > 15:
 		return render_template("error.html", message = "Hakusanassa on oltava vähintään yksi kirjain, koita uudestaan!")
@@ -68,7 +66,6 @@ def homepage(restaurant_id):
 @app.route("/ownerpage/<int:restaurant_id>")
 def ownerpage(restaurant_id):
 	restaurant = restaurants.get_restaurant_info(restaurant_id)
-	#menu= restaurants.get_restaurant_menu(restaurant_id)
 	menu = restaurants.get_menu_id(restaurant_id)
 	return render_template("ownerpage.html", id = restaurant_id, menu=menu, restaurant=restaurant)
 
@@ -77,7 +74,7 @@ def remove_dish():
 	users.require_role(2)
 	users.check_csrf()
 	restaurant_id=request.form["restaurant_id"]
-	menu_id=request.form["portion.id"]
+	menu_id=request.form["menu_id"]
 	restaurants.remove_dish(menu_id)
 	return redirect("/ownerpage/" + str(restaurant_id))
 
@@ -88,11 +85,8 @@ def new_dish():
 	restaurant_id=request.form["restaurant_id"]
 	dish=request.form["dish"]
 	price=request.form["price"]
-	visible= "TRUE"
-	restaurants.add_dish(restaurant_id, dish, price, visible)
+	restaurants.add_dish(restaurant_id, dish, price)
 	return redirect("/")
-
-
 
 @app.route("/userpage/<int:user_id>")
 def userpage(user_id):

@@ -22,9 +22,10 @@ def get_review(restaurant_id):
 	AND r.restaurant_id=:restaurant_id ORDER BY r.id"""
 	return db.session.execute(sql, {"restaurant_id" :restaurant_id}).fetchall()
 
-def top_review_():
-	sql = "SELECT MAX(stars) FROM reviews"
-	pass
+def get_top_review():
+	sql = """SELECT restaurants.name, AVG(stars) FROM restaurants, reviews WHERE 
+	reviews.restaurant_id=restaurants.id GROUP by restaurants.name LIMIT 3"""
+	return db.session.execute(sql).fetchall()
 	
 
 def add_review(restaurant_id, user_id, stars, comment):
@@ -47,7 +48,7 @@ def get_menu_id(restaurant_id):
 
 
 def get_query(query): 
-	sql = """SELECT restaurants.id, restaurants.name, restaurants.description FROM restaurants, 
+	sql = """SELECT DISTINCT restaurants.id, restaurants.name, restaurants.description FROM restaurants, 
 	styles WHERE styles.restaurant_id = restaurants.id AND style ILIKE :query"""
 	result = db.session.execute(sql, {"query": "%"+query+"%"})
 	result = result.fetchall()
@@ -58,15 +59,16 @@ def add_restaurant():
 	pass
 
 def remove_dish(menu_id):
-	sql = "UPDATE menu SET visible=FALSE WHERE menu_id=:portion.id"
+	sql = "UPDATE menu SET visible=FALSE WHERE menu.id=:menu_id"
 	db.session.execute(sql, {"menu_id":menu_id})
 	db.session.commit()
 
-def add_dish(restaurant_id, dish, price, visible):
+def add_dish(restaurant_id, dish, price):
 	sql = """INSERT INTO menu (restaurant_id, dish, price, visible) VALUES (:restaurant_id, 
 	:dish, :price, TRUE)"""
-	result = db.session.execute(sql, {"restaurant_id":restaurant_id, "dish":dish, "price":price})
-	return result.fetchall
+	db.session.execute(sql, {"restaurant_id":restaurant_id, "dish":dish, "price":price})
+	db.session.commit()
+	
 	
 
 def daily_meals():
