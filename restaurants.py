@@ -23,8 +23,8 @@ def get_review(restaurant_id):
 	return db.session.execute(sql, {"restaurant_id" :restaurant_id}).fetchall()
 
 def get_top_review():
-	sql = """SELECT restaurants.name, AVG(stars) FROM restaurants, reviews WHERE 
-	reviews.restaurant_id=restaurants.id GROUP by restaurants.name LIMIT 3"""
+	sql = """SELECT restaurants.name, AVG(stars) as avg_stars FROM restaurants, reviews WHERE 
+	reviews.restaurant_id=restaurants.id GROUP by restaurants.name ORDER BY avg_stars desc LIMIT 3"""
 	return db.session.execute(sql).fetchall()
 	
 
@@ -36,13 +36,13 @@ def add_review(restaurant_id, user_id, stars, comment):
 
 def get_restaurant_menu(restaurant_id):
 	sql = """SELECT menu.dish, menu.price FROM menu WHERE menu.restaurant_id= 
-	:restaurant_id"""
+	:restaurant_id AND menu.visible=TRUE"""
 	result = db.session.execute(sql, {"restaurant_id": restaurant_id})
 	return result.fetchall()
 
 def get_menu_id(restaurant_id):
 	sql="""SELECT menu.id, menu.dish, menu.price FROM menu WHERE menu.restaurant_id=
-	:restaurant_id"""
+	:restaurant_id AND menu.visible=TRUE"""
 	result = db.session.execute(sql, {"restaurant_id": restaurant_id})
 	return result.fetchall()
 
