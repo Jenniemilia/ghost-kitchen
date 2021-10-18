@@ -14,30 +14,22 @@
 	<div class="row">
 		<div class="col-4">
 
-		<h2>Parhaiten arvosteltu</h2>
+		<h3>Parhaiten arvosteltu</h3>
 		<ul>
 			{% for place in top_rated %}
-			<li>{{ place.name }}</li>
+			<li>{{ place.name }} Tähdet: {{ '%0.1f'| format(place.avg_stars|float)}}</li>
 			{% endfor %}
 		</ul>
-		
 
-
-		<h2>Päivän tarjoukset</h2>
-		<!-- Tee random joka arpoo kolme päivän annosta tarjoukseen -->
+		{% if session.user_id %}
+		<h3>Omat suosikit</h3>
 		<ul>
-			<li>Kalakeitto
-			<li>Burgeri + ranskalaiset
-			<li>Kikhernecurry
+			{% for place in favorites %}
+			<li>{{ place.name}}</li>
+			{% endfor %}
+			{% endif %}
 		</ul>
-
-	<br />
-
-		<h2>Ilmainen kuljetus</h2>
-		<ul>
-			<li>Salad Bar</li>
-			<li>El Estella</li>
-		</ul>
+		<br>
 	</div>
 
 		<div class="col-8">
@@ -62,9 +54,9 @@
 			<br>
 
 			{% elif session.user_role == 2 %}
-			<p>Hei ravintoloitsija, haluatko muokata menua tai lisätä päivän tarjoukset? Valitse minkä ravintolan sivuja haluat muokata</p>
+			<p>Haluatko muokata menua tai lisätä päivän tarjoukset? Valitse minkä ravintolan sivuja haluat muokata</p>
 			<div class="dropdown">
-			<button type="button bg-light" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+			<button type="button bg-light" class="btn btn-info text-white dropdown-toggle" data-bs-toggle="dropdown">
 		  	Valitse Ravintola
 			</button>
 			<ul class="dropdown-menu">
@@ -72,25 +64,87 @@
 		  		<li><a class="dropdown-item" href="/ownerpage/{{restaurant.id}}">{{ restaurant.name }}</a></li>
 			  	{% endfor %}
 			{% endif %}
-		  
 			</ul>
 		</p>
 			<br>
+			</div>
+		</div>		
+	</div>
 
+		
+
+<div class="container">
+	<h3>Katsele eri ravintoloiden tarjontaa: </h3>
+
+	
+	<div class="row mt-5 justify-content-center"r>	
+			<div class="card card-custom mx-2 mb-3">
+				<img class="card-img-top" src="/static/Pizzalandia.png" alt="Pizzalandia">
+					<div class= "card-body d-flex flex-column">
+						<h4 class="card-title text-center">Pizzalandia</h4>
+						<p class="card-text text-center">Aitoa Italialaista Artesaanipizzaa</p>
+						<a href="/homepage/4" class="btn btn-info text-white mt-auto text-center">Siirry kotisivulle</a>
+					</div>
+				</div>
+				
+				
+				<div class="card card-custom mx-2 mb-3">
+					<img class="card-img-top" src="/static/estella.png" alt="El Estella">
+						<div class= "card-body d-flex flex-column">
+							<h4 class="card-title text-center">El Estella</h4>
+							<p class="card-text text-center">Modernia Meksikolaista</p>
+							<a href="/homepage/3" class="btn btn-info text-white mt-auto text-center">Siirry kotisivulle</a>
+							</div>
+				</div>
+					
+					
+				<div class="card card-custom mx-2 mb-3">
+					<img class="card-img-top" src="/static/Nepal_World.png" alt="Nepal World">
+						<div class= "card-body d-flex flex-column">
+							<h4 class="card-title text-center">Nepal World</h4>
+							<p class="card-text text-center">Perinteisiä Nepalilaisia makuja</p>
+							<a href="/homepage/5" class="btn btn-info text-white mt-auto text-center">Siirry kotisivulle</a>
+							</div>
+				</div>	
+
+	
+				<div class="card card-custom mx-2 mb-3">			
+				<img class="card-img-top" src="/static/Salad_Bar.png" alt="Salad Bar">
+					<div class= "card-body d-flex flex-column">
+						<h4 class="card-title text-center">Salad Bar</h4>
+						<p class="card-text text-center">Raikkaita ja tuoreita salaatteja</p>
+						<a href="/homepage/2" class="btn btn-info text-white mt-auto text-center">Siirry kotisivulle</a>
+						</div>
+			</div>
+					
+				
+			<div class="card card-custom mx-2 mb-3">
+				<img class="card-img-top" src="/static/Bamboo_sushi.png" alt="Bamboo Sushi">
+					<div class= "card-body d-flex flex-column">
+						<h4 class="card-title text-center">Bamboo Sushi</h4>
+						<p class="card-text text-center">Tuoretta ja laadukasta Sushia</p>
+						<a href="/homepage/6" class="btn btn-info text-white mt-auto text-center">Siirry kotisivulle</a>
+						</div>
+					</div>
+					
+
+				<div class="card card-custom mx-2 mb-3">
+				<img class="card-img-top" src="/static/Thai_street_food.png" alt="Thai Street Food">
+					<div class= "card-body d-flex flex-column">
+						<h4 class="card-title text-center">Thai Street Food</h4>
+						<p class="card-text text-center">Aitoja ja tuoreita makuja suoraan Thaimaan katukeittiöistä</p>
+						<a href="/homepage/1" class="btn btn-info text-white mt-auto text-center">Siirry kotisivulle</a>
+						</div>
+					</div>
+				
+				</div>
+			</p>
+		</div>
+	</div>
+	
 			
-
-			<p>Katsele eri ravintoloiden tarjontaa:
-
-			<ul>
-			{% for restaurant in restaurants %}
-				<li><a href="/homepage/{{restaurant.id}}"><strong>{{ restaurant.name }}<strong></strong></a><br>
-				{{ restaurant.description }}
-				{% endfor %}
-			</ul>
-
+</div>
 			
-	  	</div>
-	  </div>
 	</body>
 	
 {% endblock %}
