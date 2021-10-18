@@ -8,4 +8,5 @@ CREATE TABLE reviews
 	(id SERIAL PRIMARY KEY, restaurant_id INTEGER REFERENCES restaurants, user_id INTEGER REFERENCES users, comment TEXT, stars INTEGER, created TIMESTAMP);
 CREATE TABLE menu 
 	(id SERIAL PRIMARY KEY, restaurant_id INTEGER REFERENCES restaurants, dish TEXT, price FLOAT);
-
+CREATE TABLE favorites
+	(id SERIAL PRIMARY KEY, restaurant_id INTEGER REFERENCES restaurants, user_id INTEGER REFERENCES users, choice BOOLEAN);

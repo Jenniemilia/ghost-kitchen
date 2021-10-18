@@ -54,10 +54,6 @@ def get_query(query):
 	result = result.fetchall()
 	return result
 
-
-def add_restaurant():
-	pass
-
 def remove_dish(menu_id):
 	sql = "UPDATE menu SET visible=FALSE WHERE menu.id=:menu_id"
 	db.session.execute(sql, {"menu_id":menu_id})
@@ -70,8 +66,4 @@ def add_dish(restaurant_id, dish, price):
 	db.session.commit()
 	
 	
-
-def daily_meals():
-	pass
-#Lisää tähän random joka arpoo päivän tarjoukset
 

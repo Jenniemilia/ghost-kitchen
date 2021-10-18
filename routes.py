@@ -7,7 +7,8 @@ import users, restaurants
 @app.route("/")
 def index():
 	top_rated = restaurants.get_top_review()
-	return render_template("index.html", users = users.get_all_users(), restaurants = restaurants.get_all_restaurants(), top_rated=top_rated)
+	favorites = users.get_favorites()
+	return render_template("index.html", users = users.get_all_users(), restaurants = restaurants.get_all_restaurants(), top_rated=top_rated, favorites=favorites)
 
 @app.route("/login", methods=["get", "post"])
 def login():
@@ -60,9 +61,17 @@ def homepage(restaurant_id):
 	menu = restaurants.get_restaurant_menu(restaurant_id)
 	info = restaurants.get_restaurant_info(restaurant_id)
 	reviews = restaurants.get_review(restaurant_id)
-	return render_template("homepage.html", reviews= reviews, id = restaurant_id, restaurant=restaurant, menu=menu, info=info)
+	favorites = users.get_favorites()
+	return render_template("homepage.html", reviews= reviews, id = restaurant_id, restaurant=restaurant, menu=menu, info=info, favorites=favorites)
 
-
+@app.route("/favorite", methods=["post"])
+def favorite():
+	users.check_csrf
+	user_id=users.user_id()
+	restaurant_id=request.form["restaurant_id"]
+	users.add_favorite(restaurant_id, user_id)
+	return redirect("/homepage/" + str(restaurant_id))
+ 
 @app.route("/ownerpage/<int:restaurant_id>")
 def ownerpage(restaurant_id):
 	restaurant = restaurants.get_restaurant_info(restaurant_id)
@@ -111,11 +120,7 @@ def review():
 	restaurants.add_review(restaurant_id, users.user_id(), stars, comment)
 	return redirect("/homepage/" + str(restaurant_id))
 
-#ravintoloitsija voi lisätä ravintoloita
-@app.route("/add", methods=["get", "post"])
-def add_restaurant():
-	users.require_role(2)
-	pass
+
 
 
 
