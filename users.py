@@ -53,4 +53,17 @@ def get_user_info(user_id):
     result = db.session.execute(sql, {"user_id":user_id})
     return result.fetchone()
 
+def add_favorite(restaurant_id, user_id):
+    sql = """INSERT INTO favorites (restaurant_id, user_id, choice) VALUES 
+    (:restaurant_id, :user_id, TRUE)"""
+    db.session.execute(sql, {"restaurant_id":restaurant_id, "user_id":user_id})
+    db.session.commit()
+
+def get_favorites():
+    sql = """SELECT restaurants.name FROM restaurants, favorites WHERE 
+    favorites.restaurant_id=restaurants.id AND choice=TRUE"""
+    result = db.session.execute(sql)
+    return result.fetchall()
+
+
 
