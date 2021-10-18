@@ -13,38 +13,31 @@
     <h2>  {{ restaurant.name }} </h2>
     <h3> {{ info.description }} </h3>
 </div>
+        
+</div>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-8">
-
             <h2><strong>MENU</strong></h2>
+            <br>
             <h6>
             <ul>
             {% for portion in menu %}
                 <li> {{ portion.dish }} - {{ portion.price }}0 €  <i class="bi bi-basket"></i></li> 
+                <br>
                 {% endfor %}
              </ul></h6>
         </div>
-
         <div class="col-sm-4">
-            <p>Lisää ravintola suosikiksi</p>
-            <form action="/favorite" method="POST">
+            <img class="" src="/static/{{ id }}.png" alt="{{restaurant.name}}">
 
-            <input type="submit" class="btn btn-success" value="Lisää suosikiksi">
-            <input type="hidden" name="restaurant_id" value="{{ id }}">
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-        </form>
-            
-        </div>
-
-        
     </div>
 </div>
 
 <div class="container-fluid bg-light">
     <div class="row">
-        <div class="col-sm-9">   
+        <div class="col-sm-8">   
         <!--arvostelu vain kirjautuneena! -->
             {% if session.user_id %}
             <p>Montako tähteä annat ravintolalle?</p>
@@ -81,14 +74,25 @@
             </ul>
             </p>
         </div>
-        <div class="col-sm-3">
-            <p><strong>Yhteystiedot:</strong> <br>
     
+        <div class="col-sm-4">
+        <p>Lisää ravintola suosikiksi</p>
+        <form action="/favorite" method="POST">
+        <input type="submit" class="btn btn-success" value="Lisää suosikiksi">
+        <input type="hidden" name="restaurant_id" value="{{ id }}">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        </form>
+        
+        <p>
+    
+        <div class="col-sm-4">
+            <p><strong>Yhteystiedot:</strong> <br>
                 <i class="bi bi-telephone-fill"></i> {{ info.phone }} <br>
                 <i class="bi bi-envelope-open-fill"></i> {{ info.email }} </p>
             </div>
+            </p>
+        </div>
     </div>
-</div>
 
 <a button type="button" class="btn" href="/">Palaa etusivulle</a>
 
