@@ -23,7 +23,7 @@ def get_review(restaurant_id):
 	return db.session.execute(sql, {"restaurant_id" :restaurant_id}).fetchall()
 
 def get_top_review():
-	sql = """SELECT restaurants.name, AVG(stars) as avg_stars FROM restaurants, reviews WHERE 
+	sql = """SELECT restaurants.name, CAST(AVG(stars)AS INTEGER) as avg_stars FROM restaurants, reviews WHERE 
 	reviews.restaurant_id=restaurants.id GROUP by restaurants.name ORDER BY avg_stars desc LIMIT 3"""
 	return db.session.execute(sql).fetchall()
 	

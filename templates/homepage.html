@@ -10,7 +10,7 @@
 <body>
 
 <div class="jumbotron text-center">
-    <h2>  {{ restaurant.name }} </h2>
+    <h2> {{ restaurant.name }} </h2>
     <h3> {{ info.description }} </h3>
 </div>
         
@@ -30,7 +30,7 @@
              </ul></h6>
         </div>
         <div class="col-sm-4">
-            <img class="" src="/static/{{ id }}.png" alt="{{restaurant.name}}">
+            <img src="/static/{{ id }}.png" class="img-responsive" alt="{{restaurant.name}}">
 
     </div>
 </div>
@@ -76,15 +76,26 @@
         </div>
     
         <div class="col-sm-4">
+        
+        {% if session.user_id == favorites.user_id and favorites.choice != TRUE %}
         <p>Lisää ravintola suosikiksi</p>
         <form action="/favorite" method="POST">
-        <input type="submit" class="btn btn-success" value="Lisää suosikiksi">
-        <input type="hidden" name="restaurant_id" value="{{ id }}">
-        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            <input type="submit" class="btn btn-info" value="Lisää suosikiksi">
+            <input type="hidden" name="restaurant_id" value="{{ id }}">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>
+        {% else %}
+        <p>Poista ravintola suosikeista</p>
+        <form action="/not_favorite" method="POST">
+            <input type="submit" class="btn btn-info" value="Poista suosikeista">
+            <input type="hidden" name="restaurant_id" value="{{ id }}">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        </form>
+        {% endif %}
+        <br>
         
         <p>
-    
+        <br>
         <div class="col-sm-4">
             <p><strong>Yhteystiedot:</strong> <br>
                 <i class="bi bi-telephone-fill"></i> {{ info.phone }} <br>

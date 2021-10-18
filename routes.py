@@ -61,7 +61,7 @@ def homepage(restaurant_id):
 	menu = restaurants.get_restaurant_menu(restaurant_id)
 	info = restaurants.get_restaurant_info(restaurant_id)
 	reviews = restaurants.get_review(restaurant_id)
-	favorites = users.get_favorites()
+	favorites = users.get_all_favorites()
 	return render_template("homepage.html", reviews= reviews, id = restaurant_id, restaurant=restaurant, menu=menu, info=info, favorites=favorites)
 
 @app.route("/favorite", methods=["post"])
@@ -70,6 +70,14 @@ def favorite():
 	user_id=users.user_id()
 	restaurant_id=request.form["restaurant_id"]
 	users.add_favorite(restaurant_id, user_id)
+	return redirect("/homepage/" + str(restaurant_id))
+
+@app.route("/not_favorite", methods=["post"])
+def not_favorite():
+	users.check_csrf
+	user_id=users.user_id()
+	restaurant_id=request.form["restaurant_id"]
+	users.delete_favorite(restaurant_id, user_id)
 	return redirect("/homepage/" + str(restaurant_id))
  
 @app.route("/ownerpage/<int:restaurant_id>")

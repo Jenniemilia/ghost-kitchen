@@ -5,13 +5,28 @@
 
 {% block content %}
 
-<ul>
-<h2>Hakuasi vastaavat tulokset</h2>
-{% for restaurant in result %}
-    <li><a href="/homepage/{{ restaurant.id }}">{{ restaurant.name }}</a><br>
-    {{ restaurant.description }}    
-    
-    {% endfor %}
-</ul>
+<body>	
+
+    <div class="jumbotron text-center">
+        <img src="/static/Logo.png" alt="Logo">
+        <h1>Tervetuloa tilamaan maistuvaa ruokaa!</h1>
+        <h3>Suoraan kotiovelle</h3>
+    </div>
+
+
+    <div class="container">
+        <div class="row mt-5 justify-content-center"></div>
+        <h2>Hakuasi vastaavat tulokset</h2>
+        {% for restaurant in result %}	
+			<div class="card card-custom mx-2 mb-3">
+				<img class="card-img-top" src="/static/{{ restaurant.id }}.png" alt="restaurant.name">
+					<div class= "card-body d-flex flex-column">
+						<h4 class="card-title text-center">{{ restaurant.name }}</h4>
+						<p class="card-text text-center">{{ restaurant.description }}</p>
+						<a href="/homepage/{{ restaurant.id }}" class="btn btn-info text-white mt-auto text-center">Siirry kotisivulle</a>
+					</div>
+				</div>
+            {% endfor %}
+     
 
 {% endblock %}
