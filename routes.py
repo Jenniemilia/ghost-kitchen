@@ -61,7 +61,7 @@ def homepage(restaurant_id):
 	menu = restaurants.get_restaurant_menu(restaurant_id)
 	info = restaurants.get_restaurant_info(restaurant_id)
 	reviews = restaurants.get_review(restaurant_id)
-	favorites = users.get_all_favorites()
+	favorites = users.get_all_favorites(restaurant_id)
 	return render_template("homepage.html", reviews= reviews, id = restaurant_id, restaurant=restaurant, menu=menu, info=info, favorites=favorites)
 
 @app.route("/favorite", methods=["post"])

@@ -70,9 +70,9 @@ def get_favorites():
     result = db.session.execute(sql)
     return result.fetchall()
 
-def get_all_favorites():
+def get_all_favorites(restaurant_id):
     sql="SELECT restaurant_id, user_id, choice FROM favorites"
-    result = db.session.execute(sql)
+    result = db.session.execute(sql, {"restaurant_id":restaurant_id})
     return result.fetchall()
 
 
