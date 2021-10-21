@@ -18,16 +18,21 @@
 	<div class="row">
 		<div class="col-4">
 
+		<div class="ratings">
 		<h3>Tähtiarvostelut:</h3>
 		<ul>
-			{% for place in top_rated %}
-			<li>{{ place.name }} 
-				Tähdet: 
-				<span class="fa fa-star checked =="></span>
-					 </li>
+			
+				{% for place in top_rated %}
+				<li>
+				{{ place.name }}
+				{% for n in range(place.avg_stars) %}
+  					<span class="review-star-active">★</span>{% endfor %}</li> 
+				
+					
 					
 			{% endfor %}
 		</ul>
+		</div>
 
 		{% if session.user_id %}
 		<h3>Omat suosikit:</h3>
