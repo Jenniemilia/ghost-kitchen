@@ -1,66 +1,124 @@
+<!DOCTYPE html>
+
 {% extends "layout.html" %}
-{% block title %}
-
+<head>{% block title %}
 {{ restaurant. name }}
-
-{% endblock %}
+{% endblock %}</head>
 
 
 {% block content %}
-
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-8">
-                <h3>Tulit ravintola {{ restaurant.name }} sivuille</h3>
+    <div class="container">
+        <h3>Tulit ravintola {{ restaurant.name }} sivuille</h3>
+        <br>
+        <h4> Valitse valikosta mitä haluat tehdä</h4>
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#menu">Muokkaa menua</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#kommentit">Poista kommentteja</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#ravintola">Lisää ravintola</a>
+          </li>
+        </ul>
 
 
-                <h4> Valitse valikosta mitä haluat tehdä</h4>
+        <!-- Tab panes -->
+        <div class="tab-content">
+        <div id="menu" class="container tab-pane active"><br>
+            
+            <p><strong>Minkä annoksen haluat poistaa?</strong></p>
 
-                <form action="/remove" method="post">
-
-                <!-- Muokkaa menua-->
-
-                <p>Minkä annoksen haluat poistaa?</p>
+            <form action="/remove" method="post">
 
                 {% for portion in menu %}
                 <input type="radio" name="menu_id" value="{{ portion.id }}"> {{ portion.dish }} <br>
-
-                {% endfor %}
+                {% endfor %}<br>
                 <p>
                 <input type="submit" value="Poista">
                 <input type="hidden" name="restaurant_id" value="{{ id }}">
                 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
                 </p>
-                </form>
+                </form><br>
 
-                <p>Lisää annos</p>
+                <p><strong>Lisää annos</strong></p>
 
                 <form action="/newdish" method="post">
                 <p>Annoksen nimi: </p>
                 <textarea name="dish" rows="3" cols="40" maxlenght="100"></textarea>
                 <p>Annoksen hinta: </p> 
-                <textarea name="price" rows="3" cols="40" maxlenght="100"></textarea>
+                <textarea name="price" rows="1" cols="20" maxlenght="20"></textarea><br>
                 <input type="submit" value="Lähetä">
                 <input type="hidden" name="restaurant_id" value="{{ id }}">
                 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-                </form>
-                
+                </form>    
+            </div>
 
-                <p>Ravintolan saamat arvostelut</p>
+        <div id="kommentit" class="container tab-pane fade"><br>
+                
+            <h5>Ravintolan saamat arvostelut</h5>
+            <p><strong>Minkä arvostelun haluat poistaa?</strong></p>
+
+            <form action="/remove_comment" method="post">
+
+                {% for comment in reviews %}
+                <input type="radio" name="reviews_id" value="{{ comment.id }}"> {{ comment[1] }} {{ comment[2] }}/5 "{{ comment[3] }}"
+                Luotu: {{ comment[4].strftime("%Y-%m-%d %H:%M") }} <br>
+                {% endfor %}<br>
+                <p>
+                <input type="submit" value="Poista">
+                <input type="hidden" name="restaurant_id" value="{{ id }}">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                </p>
+                </form>    
+            </div>
+
+        <div id="ravintola" class="container tab-pane fade"><br>
+
+            <h5>Lisää uusi ravintola</h5>
+            <form action="/add_restaurant" method="post">
+                <p>Ravintolan nimi:<br>
+                    <textarea name="name" rows="1" cols="30" maxlenght="20"></textarea>
+                <p>Ravintolan puhelinnumero:<br>
+                    <textarea name="phone" rows="1" cols="30" maxlenght="20"></textarea>
+                <p>Ravintolan puhelinnumero:<br>
+                    <textarea name="email" rows="1" cols="30" maxlenght="20"></textarea> 
+                <p>Lyhyt kuvaus ravintolasta:<br>
+                    <textarea name="description" rows="2" cols="30" maxlenght="50"></textarea> 
+                
+                <input type="submit" value="Lähetä">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                
+                <p>Valitse millä hakusanoilla ravintolaa voi etsiä:</p>
+                {% for style in styles %} 
+                <input type="checkbox" name="style" value=""> {{ style.style }}
+                {% endfor %}<br>
+                <input type="submit" formaction="/select_style" value="Lähetä">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+
+                <br><p>Tai lisää uusi hakusana:<br>
+                <textarea name="style" rows="1" cols="30" maxlenght="20"></textarea>
+                </p>
+
+                <input type="submit" formaction="/add_style" value="Lähetä">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+
+            </form>
+
+
             </div>
         </div>
+    </div>
 </body>
 
 
 
-
-
-<!-- Poista ravintola -->
-
-<!-- Lisää tarjous-->
-
-<!-- Muuta yhteystietoja-->
 
 
 {% endblock %}

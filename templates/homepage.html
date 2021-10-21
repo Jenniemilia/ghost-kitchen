@@ -19,10 +19,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-8">
-            <h2><strong>MENU</strong></h2>
-            <br>
-            <h6>
-            <ul>
+            <h2><strong>MENU</strong></h2><br>
+            <h6><ul>
             {% for portion in menu %}
                 <li> {{ portion.dish }} - {{ portion.price }}0 €  <i class="bi bi-basket"></i></li> 
                 <br>
@@ -59,17 +57,17 @@
             <input type="hidden" name="restaurant_id" value="{{ id }}">
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             </form>
-            {% endif %}
+            {% endif %}<br>
         
 
-            {% if reviews %}
-            <h3>Lue muiden jättämiä arvosteluita</h3>
+            <p>{% if reviews %}
+            <h3>Lue muiden jättämiä arvosteluita</h3><br>
             {% endif %}
 
             <ul>
             {% for input in reviews %}
-                <li> {{ input[0] }} {{ input[1] }}/5 "{{ input[2] }}"
-                Luotu: {{ input[3].strftime("%Y-%m-%d %H:%M") }}
+                <li>{{ input[2] }}/5 "{{ input[3] }}" -{{ input[1] }}-<br>
+                Luotu: {{ input[4].strftime("%Y-%m-%d %H:%M") }}</li><br>
                 {% endfor %}
             </ul>
             </p>

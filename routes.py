@@ -86,7 +86,38 @@ def not_favorite():
 def ownerpage(restaurant_id):
 	restaurant = restaurants.get_restaurant_info(restaurant_id)
 	menu = restaurants.get_menu_id(restaurant_id)
-	return render_template("ownerpage.html", id = restaurant_id, menu=menu, restaurant=restaurant)
+	reviews = restaurants.get_review(restaurant_id)
+	styles = restaurants.get_styles()
+	return render_template("ownerpage.html", id = restaurant_id, menu=menu, restaurant=restaurant, reviews=reviews, styles=styles)
+
+@app.route("/add_restaurant", methods=["post"])
+def add_restaurant():
+	users.require_role(2)
+	users.check_csrf()
+	restaurant_id=request.form["restaurant_id"]
+	name=request.form["name"]
+	if len(name) < 1 or len(name) > 20:
+			return render_template("error.html", message = "Ravintolan nimessä tulee olla 1-20 kirjainta, yritä uudestaan")
+	phone=request.form["phone"]
+	if len(phone) < 1 or len(phone) > 20:
+			return render_template("error.html", message = "Ravintolan puhelinnumerossa tulee olla 1-20 kirjainta, yritä uudestaan")
+	email=request.form["email"]
+	if len(email) < 1 or len(email) > 20:
+		return render_template("error.html", message = "Ravintolan sähköpostissa tulee olla 1-20 kirjainta, yritä uudestaan")
+	description=request.form["description"]
+	if len(description) < 1 or len(description) > 50:
+		return render_template("error.html", message = "Ravintolan kuvauksessa tulee olla 1-50 kirjainta, yritä uudestaan")
+	return redirect("/ownerpage/" + str(restaurant_id))
+
+@app.route("/select_styles", methods=["post"])
+def select_style():
+	style=request.form.getlist("style")
+	return redirect("/")
+
+@app.route("/add_style", methods=["post"])
+def add_style():
+	style=request.form["style"]
+	return redirect("/")
 
 @app.route("/remove", methods=["post"])
 def remove_dish():
@@ -105,7 +136,17 @@ def new_dish():
 	dish=request.form["dish"]
 	price=request.form["price"]
 	restaurants.add_dish(restaurant_id, dish, price)
-	return redirect("/")
+	return redirect("/ownerpage/" + str(restaurant_id))
+
+@app.route("/remove_comment", methods=["post"])
+def remove_comment():
+	users.require_role(2)
+	users.check_csrf()
+	restaurant_id=request.form["restaurant_id"]
+	reviews_id=request.form["reviews_id"]
+	restaurants.remove_comment(reviews_id)
+	return redirect("/ownerpage/" + str(restaurant_id))
+
 
 @app.route("/userpage/<int:user_id>")
 def userpage(user_id):

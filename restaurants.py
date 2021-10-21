@@ -18,8 +18,8 @@ def get_restaurant_info(restaurant_id):
 	return result.fetchone()
 
 def get_review(restaurant_id):
-	sql = """SELECT u.name, r.stars, r.comment, r.created FROM users u, reviews r WHERE r.user_id=u.id 
-	AND r.restaurant_id=:restaurant_id ORDER BY r.id"""
+	sql = """SELECT r.id, u.name, r.stars, r.comment, r.created FROM users u, reviews r WHERE r.user_id=u.id 
+	AND r.restaurant_id=:restaurant_id AND r.visible=TRUE ORDER BY r.id"""
 	return db.session.execute(sql, {"restaurant_id" :restaurant_id}).fetchall()
 
 def get_top_review():
@@ -54,6 +54,17 @@ def get_query(query):
 	result = result.fetchall()
 	return result
 
+def get_styles():
+	sql = "SELECT DISTINCT style FROM styles"
+	result = db.session.execute(sql)
+	return result
+
+def add_restaurant(name, phone, email, description):
+	sql = """INSERT INTO restaurants restaurant.name, restaurant.phone, restaurant.style, restaurant.descriprion VALUES 
+	(:name, :phone, :email, :description)"""
+	db.session.execute(sql, {"name":name, "phone":phone, "email":email, "description":description })
+	db.session.commit()
+
 def remove_dish(menu_id):
 	sql = "UPDATE menu SET visible=FALSE WHERE menu.id=:menu_id"
 	db.session.execute(sql, {"menu_id":menu_id})
@@ -63,6 +74,11 @@ def add_dish(restaurant_id, dish, price):
 	sql = """INSERT INTO menu (restaurant_id, dish, price, visible) VALUES (:restaurant_id, 
 	:dish, :price, TRUE)"""
 	db.session.execute(sql, {"restaurant_id":restaurant_id, "dish":dish, "price":price})
+	db.session.commit()
+
+def remove_comment(reviews_id):
+	sql = "UPDATE reviews SET visible=FALSE WHERE reviews.id=:reviews_id"
+	db.session.execute(sql, {"reviews_id":reviews_id})
 	db.session.commit()
 	
 	
