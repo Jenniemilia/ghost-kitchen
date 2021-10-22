@@ -7,8 +7,9 @@ import users, restaurants
 @app.route("/")
 def index():
 	top_rated = restaurants.get_top_review()
-	favorites = users.get_favorites()
 	user_id = users.user_id()
+	favorites = users.get_favorites(user_id)
+	
 	return render_template("index.html",user_id=user_id, users = users.get_all_users(), restaurants = restaurants.get_all_restaurants(), top_rated=top_rated, favorites=favorites)
 
 @app.route("/login", methods=["get", "post"])
@@ -68,17 +69,19 @@ def homepage(restaurant_id):
 	menu = restaurants.get_restaurant_menu(restaurant_id)
 	info = restaurants.get_restaurant_info(restaurant_id)
 	reviews = restaurants.get_review(restaurant_id)
-	favorites = users.get_favorites_by_restaurant(restaurant_id)
-	user_id=users.user_id()
+	user_id = users.user_id()
+	favorites = users.get_favorites_by_restaurant(restaurant_id, user_id)
+	
 	return render_template("homepage.html", reviews= reviews, user_id=user_id, id = restaurant_id, restaurant=restaurant, menu=menu, info=info, favorites=favorites)
 	
 
 @app.route("/favorite", methods=["post"])
 def favorite():
 	users.check_csrf
-	user_id=users.user_id()
-	restaurant_id=request.form["restaurant_id"]
+	user_id = users.user_id()
+	restaurant_id = request.form["restaurant_id"]
 	users.add_favorite(restaurant_id, user_id)
+	flash("Ravintola lisätty suosikiksi", "success")
 	return redirect("/homepage/" + str(restaurant_id))
 
 @app.route("/not_favorite", methods=["post"])
@@ -87,6 +90,7 @@ def not_favorite():
 	user_id=users.user_id()
 	restaurant_id=request.form["restaurant_id"]
 	users.delete_favorite(restaurant_id, user_id)
+	flash("Ravintola poistettu suosikeista", "success")
 	return redirect("/homepage/" + str(restaurant_id))
  
 @app.route("/ownerpage/<int:restaurant_id>")
@@ -114,20 +118,16 @@ def add_restaurant():
 	description=request.form["description"]
 	if len(description) < 1 or len(description) > 50:
 		return render_template("error.html", message = "Ravintolan kuvauksessa tulee olla 1-50 kirjainta, yritä uudestaan")
-	restaurants.add_restaurant(name, phone, email, description)
+	styles=request.form.getlist("style")
+	restaurants.add_restaurant(name, phone, email, description, styles)
+	
 	flash("Ravintolan lisääminen onnistui", "success")
-	return redirect("/ownerpage/" + str(restaurant_id))
-
-@app.route("/select_styles", methods=["post"])
-def select_style():
-	restaurant_id=request.form["restaurant_id"]
-	style=request.form.getlist("style")
 	return redirect("/ownerpage/" + str(restaurant_id))
 
 @app.route("/add_style", methods=["post"])
 def add_style():
 	restaurant_id=request.form["restaurant_id"]
-	style=request.form["style"]
+	styles=request.form["style"]
 	flash("Uuden hakusanan lisääminen onnistui", "success")
 	return redirect("/ownerpage/" + str(restaurant_id))
 
@@ -185,6 +185,15 @@ def review():
 
 	restaurants.add_review(restaurant_id, users.user_id(), stars, comment)
 	flash("Arvostelun lisäys onnistui", "success")
+	return redirect("/homepage/" + str(restaurant_id))
+
+@app.route("/shopping_bag", methods=["post"])
+def shopping_bag():
+	users.check_csrf()
+	restaurant_id=request.form["restaurant_id"]
+	user_id=request.form["user_id"]
+	dish=request.form.getlist["dish"]
+	flash("Ruuat laitettu tilaukseen, kiitos!", "success")
 	return redirect("/homepage/" + str(restaurant_id))
 
 

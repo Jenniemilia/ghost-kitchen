@@ -21,16 +21,20 @@
         <div class="col-sm-8">
             <h2><strong>MENU</strong></h2><br>
             <h6><ul>
+            <form action="/shopping_bag" method="POST">
             {% for portion in menu %}
                 <li> {{ portion.dish }} - {{ portion.price }}0 € 
-                    <label class="custom-checkbox">
+                    <label class="custom-checkbox" name="dish" value="{{ portion.dish }}">
                     <input type="checkbox">
                     <i class="bi bi-basket3 unchecked"></i>
                     <i class="bi bi-basket3-fill checked"></i>
                 </li>
                 <br>
-                {% endfor %}
-             </ul></h6></label>
+                {% endfor %}</ul></h6><br>
+                <input type="submit" value="Tilaa">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+             </label>
+            </form><br>
 
         </div>
         <div class="col-sm-4">
@@ -81,14 +85,7 @@
     
         <div class="col-sm-4">
         
-        {% if session.user_id %}
-        
-        <p>Lisää ravintola suosikiksi</p>
-        <form action="/favorite" method="POST">
-            <input type="submit" class="btn btn-info" value="Lisää suosikiksi">
-            <input type="hidden" name="restaurant_id" value="{{ id }}">
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-        </form>
+        {% if favorites %}
       
         <p>Poista ravintola suosikeista</p>
         <form action="/not_favorite" method="POST">
@@ -96,7 +93,14 @@
             <input type="hidden" name="restaurant_id" value="{{ id }}">
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>
-    
+        {% else %}
+        <p>Lisää ravintola suosikiksi</p>
+        <form action="/favorite" method="POST">
+            <input type="submit" class="btn btn-info" value="Lisää suosikiksi">
+            <input type="hidden" name="restaurant_id" value="{{ id }}">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        </form>
+
         {% endif %}
         <br>
         

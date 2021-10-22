@@ -59,10 +59,14 @@ def get_styles():
 	result = db.session.execute(sql)
 	return result
 
-def add_restaurant(name, phone, email, description):
+def add_restaurant(name, phone, email, description, styles):
 	sql = """INSERT INTO restaurants (name, phone, email, description) VALUES 
-	(:name, :phone, :email, :description)"""
-	db.session.execute(sql, {"name":name, "phone":phone, "email":email, "description":description})
+	(:name, :phone, :email, :description) RETURNING id"""
+	result = db.session.execute(sql, {"name":name, "phone":phone, "email":email, "description":description})
+	restaurant_id = result.fetchone()[0]
+	for style in styles:
+		sql = "INSERT INTO styles (restaurant_id, style) VALUES (:restaurant_id, :style)"
+		db.session.execute(sql, {"restaurant_id":restaurant_id, "style":style})
 	db.session.commit()
 
 def add_style():

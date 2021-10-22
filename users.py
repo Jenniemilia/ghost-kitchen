@@ -60,19 +60,23 @@ def add_favorite(restaurant_id, user_id):
     db.session.commit()
 
 def delete_favorite(restaurant_id, user_id):
-    sql = "UPDATE favorites SET choice= FALSE where resturant_id=:restaurant_id AND user_id=:user_id"
+    sql = "UPDATE favorites SET choice = FALSE WHERE restaurant_id=:restaurant_id AND user_id=:user_id"
     db.session.execute(sql, {"restaurant_id":restaurant_id, "user_id":user_id})
     db.session.commit()
 
-def get_favorites():
+def get_favorites(user_id):
     sql = """SELECT DISTINCT restaurants.name FROM restaurants, favorites WHERE 
-    favorites.restaurant_id=restaurants.id AND choice=TRUE"""
-    result = db.session.execute(sql)
+    favorites.restaurant_id=restaurants.id AND user_id=:user_id AND choice=TRUE"""
+    result = db.session.execute(sql, {"user_id":user_id})
     return result.fetchall()
 
-def get_favorites_by_restaurant(restaurant_id):
-    sql="""SELECT restaurant_id, user_id, choice FROM favorites WHERE restaurant_id=:restaurant_id"""
-    result = db.session.execute(sql, {"restaurant_id":restaurant_id})
+def get_favorites_by_restaurant(restaurant_id, user_id):
+    sql="""SELECT * FROM favorites WHERE restaurant_id=:restaurant_id AND 
+    user_id=:user_id AND choice=TRUE"""
+    result = db.session.execute(sql, {"restaurant_id":restaurant_id, "user_id":user_id})
     return result.fetchall()
+
+def add_shopping_bag(user_id, dish):
+    pass
 
 
