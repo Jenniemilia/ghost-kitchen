@@ -81,7 +81,6 @@
     
         <div class="col-sm-4">
         
-        {% if session.user.id %}
         {% if favorites.choice != TRUE %}
         <p>Lisää ravintola suosikiksi</p>
         <form action="/favorite" method="POST">
