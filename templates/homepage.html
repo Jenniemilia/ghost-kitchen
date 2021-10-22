@@ -22,10 +22,16 @@
             <h2><strong>MENU</strong></h2><br>
             <h6><ul>
             {% for portion in menu %}
-                <li> {{ portion.dish }} - {{ portion.price }}0 €  <i class="bi bi-basket"></i></li> 
+                <li> {{ portion.dish }} - {{ portion.price }}0 € 
+                    <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <i class="bi bi-basket3 unchecked"></i>
+                    <i class="bi bi-basket3-fill checked"></i>
+                </li>
                 <br>
                 {% endfor %}
-             </ul></h6>
+             </ul></h6></label>
+
         </div>
         <div class="col-sm-4">
             <img src="/static/{{ id }}.png" class="img-responsive" alt="{{restaurant.name}}">
@@ -71,10 +77,11 @@
                 {% endfor %}
             </ul>
             </p>
-        </div>
+        </div>    
     
         <div class="col-sm-4">
         
+        {% if session.user.id %}
         {% if favorites.choice != TRUE %}
         <p>Lisää ravintola suosikiksi</p>
         <form action="/favorite" method="POST">

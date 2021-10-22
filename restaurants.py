@@ -65,6 +65,9 @@ def add_restaurant(name, phone, email, description):
 	db.session.execute(sql, {"name":name, "phone":phone, "email":email, "description":description })
 	db.session.commit()
 
+def add_style():
+	sql = """INSERT INTO styles rastaurant.id, """
+
 def remove_dish(menu_id):
 	sql = "UPDATE menu SET visible=FALSE WHERE menu.id=:menu_id"
 	db.session.execute(sql, {"menu_id":menu_id})

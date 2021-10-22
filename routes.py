@@ -1,5 +1,5 @@
 from app import app
-from flask import redirect, render_template, request
+from flask import redirect, render_template, request, flash
 
 import users, restaurants
  
@@ -18,8 +18,10 @@ def login():
 		username = request.form["username"]
 		password = request.form["password"]
 		if users.login(username, password):
+			flash("Kirjautuminen onnistui", "success")
 			return redirect("/")
-	return render_template("error.html", message="Väärä käyttäjätunnus tai salasana")			
+	flash("Väärä käyttäjätunnus tai salasana", "error")	
+	return render_template("login.html")			
 
 @app.route("/logout")
 def logout():
