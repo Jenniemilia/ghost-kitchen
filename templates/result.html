@@ -15,8 +15,9 @@
 
 
     <div class="container">
-        <div class="row mt-5 justify-content-center"></div>
         <h2>Hakuasi vastaavat tulokset</h2>
+        <div class="row mt-5 justify-content-center">
+       
         {% for restaurant in result %}	
 			<div class="card card-custom mx-2 mb-3">
 				<img class="card-img-top" src="/static/{{ restaurant.id }}.png" alt="restaurant.name">

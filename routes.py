@@ -8,7 +8,8 @@ import users, restaurants
 def index():
 	top_rated = restaurants.get_top_review()
 	favorites = users.get_favorites()
-	return render_template("index.html", users = users.get_all_users(), restaurants = restaurants.get_all_restaurants(), top_rated=top_rated, favorites=favorites)
+	user_id = users.user_id()
+	return render_template("index.html",user_id=user_id, users = users.get_all_users(), restaurants = restaurants.get_all_restaurants(), top_rated=top_rated, favorites=favorites)
 
 @app.route("/login", methods=["get", "post"])
 def login():
@@ -24,7 +25,7 @@ def login():
 	return render_template("login.html")			
 
 @app.route("/logout")
-def logout():
+def logout():	
     users.logout()
     return redirect("/")
 
@@ -35,17 +36,21 @@ def register():
 	if request.method == "POST":
 		username = request.form["username"]
 		if len(username) < 3 or len(username) > 25:
-			return render_template("error.html", message = "Tunnuksessasi tulisi olla 3-25 merkkiä, kokeile uudelleen")
+			flash("Tunnuksessasi tulisi olla 3-25 merkkiä, kokeile uudelleen", "error")	
+			return render_template("register.html")
 		password1 = request.form["password1"]
 		password2 = request.form["password2"]
 		if password1 != password2:
-			return render_template("error.html", message="Salasanat eivät täsmää, tarkista oikeinkirjoitus ja yritä uudestaan!")
+			flash("Salasanat eivät täsmää, tarkista oikeinkirjoitus ja yritä uudestaan!", "error")
+			return render_template("register.html")
 		
 		role = request.form["role"]
 		if role not in ("1", "2"):
-			return render_template("error.html", message="Tällaista käyttäjää ei ole olemassa")
+			flash("Tällaista käyttäjää ei ole olemassa", "error")
+			return render_template("register.html")
 		if not users.register(username, password1, role):
-			return render_template("error.html", message="Rekisteröinti ei jostain syystä onnistunut, yritä uudelleen")
+			flash("Rekisteröinti ei jostain syystä onnistunut, yritä uudelleen", "error")
+			return render_template("register.html")
 	return redirect("/")
 
 @app.route("/result")
@@ -109,17 +114,22 @@ def add_restaurant():
 	description=request.form["description"]
 	if len(description) < 1 or len(description) > 50:
 		return render_template("error.html", message = "Ravintolan kuvauksessa tulee olla 1-50 kirjainta, yritä uudestaan")
+	restaurants.add_restaurant(name, phone, email, description)
+	flash("Ravintolan lisääminen onnistui", "success")
 	return redirect("/ownerpage/" + str(restaurant_id))
 
 @app.route("/select_styles", methods=["post"])
 def select_style():
+	restaurant_id=request.form["restaurant_id"]
 	style=request.form.getlist("style")
-	return redirect("/")
+	return redirect("/ownerpage/" + str(restaurant_id))
 
 @app.route("/add_style", methods=["post"])
 def add_style():
+	restaurant_id=request.form["restaurant_id"]
 	style=request.form["style"]
-	return redirect("/")
+	flash("Uuden hakusanan lisääminen onnistui", "success")
+	return redirect("/ownerpage/" + str(restaurant_id))
 
 @app.route("/remove", methods=["post"])
 def remove_dish():
@@ -128,6 +138,7 @@ def remove_dish():
 	restaurant_id=request.form["restaurant_id"]
 	menu_id=request.form["menu_id"]
 	restaurants.remove_dish(menu_id)
+	flash("Ruokalaji poistettu", "success")
 	return redirect("/ownerpage/" + str(restaurant_id))
 
 @app.route("/newdish", methods=["post"])
@@ -138,6 +149,7 @@ def new_dish():
 	dish=request.form["dish"]
 	price=request.form["price"]
 	restaurants.add_dish(restaurant_id, dish, price)
+	flash("Ruokalajin lisäys onnistui", "success")
 	return redirect("/ownerpage/" + str(restaurant_id))
 
 @app.route("/remove_comment", methods=["post"])
@@ -147,6 +159,7 @@ def remove_comment():
 	restaurant_id=request.form["restaurant_id"]
 	reviews_id=request.form["reviews_id"]
 	restaurants.remove_comment(reviews_id)
+	flash("Kommentin poisto onnistui", "success")
 	return redirect("/ownerpage/" + str(restaurant_id))
 
 
@@ -164,13 +177,14 @@ def review():
 	restaurant_id=request.form["restaurant_id"]
 	stars = int(request.form["stars"])
 	if stars < 1 or stars > 5:
-		return render_template("error.html", message="Valitettavasti arvostelussa oli virheellinen määrä tähtiä, yritä uudelleen")
-
+		flash("Valitettavasti arvostelussa oli virheellinen määrä tähtiä, yritä uudelleen", "error")
+		return redirect("/homepage/" + str(restaurant_id))
 	comment = request.form["comment"]
 	if comment == "":
 		comment = " - "
 
 	restaurants.add_review(restaurant_id, users.user_id(), stars, comment)
+	flash("Arvostelun lisäys onnistui", "success")
 	return redirect("/homepage/" + str(restaurant_id))
 
 
