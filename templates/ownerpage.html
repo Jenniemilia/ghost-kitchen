@@ -100,16 +100,13 @@
                 {% for style in styles %} 
                 <input type="checkbox" name="style" value="{{ style.style }}"> {{ style.style }}
                 {% endfor %}<br>
-                <input type="submit" value="Lähetä">
-                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-            </form>
-
+                
 
                 <br><p>Tai lisää uusi hakusana:<br>
-                <textarea name="style" rows="1" cols="30" maxlenght="20"></textarea>
+                <textarea name="new_style" rows="1" cols="30" maxlenght="20"></textarea>
                 </p>
 
-                <input type="submit" formaction="/add_style" value="Lähetä">
+                <input type="submit" value="Lähetä">
                 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 
 

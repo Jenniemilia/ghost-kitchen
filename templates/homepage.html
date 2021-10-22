@@ -21,17 +21,18 @@
         <div class="col-sm-8">
             <h2><strong>MENU</strong></h2><br>
             <h6><ul>
-            <form action="/shopping_bag" method="POST">
+            <form action="/orders" method="POST">
             {% for portion in menu %}
                 <li> {{ portion.dish }} - {{ portion.price }}0 € 
-                    <label class="custom-checkbox" name="dish" value="{{ portion.dish }}">
-                    <input type="checkbox">
+                    <label class="custom-checkbox">
+                    <input type="checkbox" name="dish" value="{{ portion.id }}">
                     <i class="bi bi-basket3 unchecked"></i>
                     <i class="bi bi-basket3-fill checked"></i>
                 </li>
                 <br>
                 {% endfor %}</ul></h6><br>
                 <input type="submit" value="Tilaa">
+                <input type="hidden" name="restaurant_id" value="{{ id }}">
                 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
              </label>
             </form><br>

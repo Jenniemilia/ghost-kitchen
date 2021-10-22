@@ -119,6 +119,9 @@ def add_restaurant():
 	if len(description) < 1 or len(description) > 50:
 		return render_template("error.html", message = "Ravintolan kuvauksessa tulee olla 1-50 kirjainta, yritä uudestaan")
 	styles=request.form.getlist("style")
+	new_style = request.form["new_style"]
+	if new_style != "":
+		styles.append(new_style)
 	restaurants.add_restaurant(name, phone, email, description, styles)
 	
 	flash("Ravintolan lisääminen onnistui", "success")
@@ -187,14 +190,17 @@ def review():
 	flash("Arvostelun lisäys onnistui", "success")
 	return redirect("/homepage/" + str(restaurant_id))
 
-@app.route("/shopping_bag", methods=["post"])
-def shopping_bag():
+@app.route("/orders", methods=["post"])
+def orders():
 	users.check_csrf()
+	user_id = users.user_id()
 	restaurant_id=request.form["restaurant_id"]
-	user_id=request.form["user_id"]
-	dish=request.form.getlist["dish"]
+	dishes=request.form.getlist("dish")
+	restaurants.orders(restaurant_id, user_id, dishes)
 	flash("Ruuat laitettu tilaukseen, kiitos!", "success")
+	print(dishes)
 	return redirect("/homepage/" + str(restaurant_id))
+
 
 
 

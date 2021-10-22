@@ -35,7 +35,7 @@ def add_review(restaurant_id, user_id, stars, comment):
 	db.session.commit()
 
 def get_restaurant_menu(restaurant_id):
-	sql = """SELECT menu.dish, menu.price FROM menu WHERE menu.restaurant_id= 
+	sql = """SELECT menu.id, menu.dish, menu.price FROM menu WHERE menu.restaurant_id= 
 	:restaurant_id AND menu.visible=TRUE"""
 	result = db.session.execute(sql, {"restaurant_id": restaurant_id})
 	return result.fetchall()
@@ -69,9 +69,6 @@ def add_restaurant(name, phone, email, description, styles):
 		db.session.execute(sql, {"restaurant_id":restaurant_id, "style":style})
 	db.session.commit()
 
-def add_style():
-	sql = """INSERT INTO styles rastaurant.id, """
-
 def remove_dish(menu_id):
 	sql = "UPDATE menu SET visible=FALSE WHERE menu.id=:menu_id"
 	db.session.execute(sql, {"menu_id":menu_id})
@@ -87,6 +84,12 @@ def remove_comment(reviews_id):
 	sql = "UPDATE reviews SET visible=FALSE WHERE reviews.id=:reviews_id"
 	db.session.execute(sql, {"reviews_id":reviews_id})
 	db.session.commit()
-	
-	
 
+def orders(restaurant_id, user_id, dishes):
+	sql = """INSERT INTO orders (restaurant_id, user_id, created) VALUES (:restaurant_id, :user_id, NOW()) RETURNING id"""
+	result= db.session.execute(sql, {"restaurant_id":restaurant_id, "user_id":user_id})
+	order_id = result.fetchone()[0]
+	for dish in dishes:
+		sql = "INSERT INTO delivery (order_id, dish_id) VALUES (:order_id, :dish)"
+		db.session.execute(sql, {"order_id":order_id, "dish":dish})
+	db.session.commit()

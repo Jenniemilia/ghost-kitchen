@@ -76,7 +76,3 @@ def get_favorites_by_restaurant(restaurant_id, user_id):
     result = db.session.execute(sql, {"restaurant_id":restaurant_id, "user_id":user_id})
     return result.fetchall()
 
-def add_shopping_bag(user_id, dish):
-    pass
-
-
