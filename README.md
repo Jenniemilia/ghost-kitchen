@@ -25,5 +25,6 @@ Käyttäjä näkee tarkempaa tietoa ravintolasta. Täältä löytyy myös muiden
 
 **Ylläpitäjä**
 
-Omilla sivuillaan ylläpitäjä voi lisätä ravintoloita sekä niihin liittyviä hakusanoja. Hän voi myös lisätä tai poistaa annoksia eri ravintoloiden menuihin. Ylläpitäjällä on myös oikeus poistaa asiattomia arvosteluja.
-Omilla sivuillaan hän pystyy myös seuraamaan tilaushistoriaa.
+Omilla sivuillaan ylläpitäjä voi lisätä ravintoloita sekä niihin liittyviä hakusanoja. Hän voi myös lisätä tai poistaa annoksia. 
+Sivuilla pystyy seuraamaan tilaushistoriaa sekä näkemään kappaleissa tilatut annokset suosituin annos ensin. Näin on helppoa reagoida jos jokin annos ei myy.
+Ylläpitäjällä on myös oikeus poistaa asiattomia arvosteluja.
