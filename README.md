@@ -7,19 +7,7 @@ Kuljetuksiin hyödynnetään alalla toimivia yhteistyökumppaneita.
 
 https://ghost-kitchen.herokuapp.com/
 
-**3. palautus**
-- Asiakas pystyy kirjautumaan tai luomaan uuden käyttäjätunnuksen sekä kirjautumaan ulos
-- Ravintoloitsija pystyy kirjautumaan tai luomaan uuden käyttäjätunnuksen admin oikeuksilla
-- Etusivulta voi siirtyä ravintolan kotisivuille
-- Etusivulla on hakutoiminto, josta asiakas voi hakea eri ravintoloita hakusanoilla kuten thai, vegaani, sushi jne.
-- Ravintoloitsija pystyy valitsemaan ravintolan jonka tietoja haluaa muokata
-    - Kesken: annoksen lisäys ja poisto, ravintolan tietojen muokkaus sekä asiattomien kommentien poisto
-- Asiakas pystyy menemään omille sivuilleen
-    - Kesken omat kommentit ja suosikit
-   
-
 **Keskeiset toiminnot**
-
 
 **Etusivu** 
 
@@ -29,13 +17,13 @@ Hakutoiminto - Käyttäjä voi etsiä eri kriteereillä ravintoloita, esim. Vega
 
 TOP listaus – Etusivulla näkyy tähtiarvio perustuen käyttäjien arviointien keskiarvoon.
 
-Tarjoukset - Etusivulla näkyy mahdolliset tarjoukset ja kampanjat.
+Suosikit - Etusivulla näkyy käyttäjn omat suosikkiravintolat.
 
 **Ravintolan sivu**
 
-Käyttäjä näkee tarkempaa tietoa ravintolasta. Täältä löytyy myös muiden asiakkaiden antamat arvostelut sekä kirjautuneena voi kirjoittaa oman arvostelun.
+Käyttäjä näkee tarkempaa tietoa ravintolasta. Täältä löytyy myös muiden asiakkaiden antamat arvostelut sekä kirjautuneena voi kirjoittaa oman arvostelun sekä lisätä ravintolan suosikikseen. Sivuilta voi myös valita tuooteita ostoskoriin ja tehdä ruokatilauksen.
 
 **Ylläpitäjä**
 
-Ylläpitäjä voi lisätä ja poistaa ravintoloita. Hänellä on myös oikeus poistaa asiattomia arvosteluja.
-Ylläpitäjällä on mahdollisuus luoda erilaisia kategorioita ravintoloista helpottaakseen asiakkaan valintaa. Tällaisia voi olla esimerkiksi aamupala, lounas ja illallinen kategoriat.
+Omilla sivuillaan ylläpitäjä voi lisätä ravintoloita sekä niihin liittyviä hakusanoja. Hän voi myös lisätä tai poistaa annoksia eri ravintoloiden menuihin. Ylläpitäjällä on myös oikeus poistaa asiattomia arvosteluja.
+Omilla sivuillaan hän pystyy myös seuraamaan tilaushistoriaa.
