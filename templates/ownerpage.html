@@ -111,14 +111,21 @@
 
         <div id="tilaukset" class="container tab-pane fade"><br>
 
-            <h5>Katso tilaushistoriaa</h5>    
+            <h5>Katso tilaushistoriaa</h5><br>   
+
+            <p><strong>Tilatuimmat annokset:</strong></p>
+            {% for dish in top_orders %}
+            <ul><li>
+                {{dish[0]}} kpl - {{ dish[1]}}
+            </li></ul> 
+            {% endfor %} <br>
             
+            <p><strong>Kaikki tilaukset:</strong></p>
             {% for order in orders %}
             <ul><li>
-            Tilausnumero: {{ order[0]}}, Tilaus luotu: {{ order[4].strftime("%d.%m.%Y %H:%M") }}
-            {{ order[3]}}
-            </li></ul>
-            
+                Tilausnumero: {{ order[0]}}, Tilaus luotu: {{ order[4].strftime("%d.%m.%Y %H:%M") }}
+                {{ order[3]}}
+            </li></ul>           
             {% endfor %}
 
             </div>

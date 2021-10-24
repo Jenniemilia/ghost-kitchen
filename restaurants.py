@@ -92,10 +92,13 @@ def orders(restaurant_id, user_id, dishes):
 
 def get_orders(restaurant_id):
 	sql = """SELECT D.order_id, R.name, R.id, M.dish, created FROM Delivery D, Restaurants R, Orders O, Menu M WHERE
-	 O.id=D.order_id AND M.id=D.dish_id AND R.id=O.restaurant_id AND R.id=:restaurant_id"""
+	 O.id=D.order_id AND M.id=D.dish_id AND R.id=O.restaurant_id AND R.id=:restaurant_id ORDER BY created DESC"""
 	result = db.session.execute(sql, {"restaurant_id":restaurant_id})
 	return result
 
 def get_top_orders(restaurant_id):
-	pass
+	sql = """SELECT COUNT(D.dish_id), m.dish FROM Delivery D, Menu M,Orders O, Restaurants R WHERE O.id=D.order_id AND
+	 M.id=D.dish_id AND R.id=O.restaurant_id AND R.id=:restaurant_id GROUP BY D.dish_id, m.dish ORDER BY COUNT(D.dish_id) DESC"""
+	result = db.session.execute(sql, {"restaurant_id":restaurant_id})
+	return result 
 

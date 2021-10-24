@@ -99,7 +99,8 @@ def ownerpage(restaurant_id):
 	reviews = restaurants.get_review(restaurant_id)
 	styles = restaurants.get_styles()
 	orders = restaurants.get_orders(restaurant_id)
-	return render_template("ownerpage.html", id = restaurant_id, menu=menu, restaurant=restaurant, reviews=reviews, styles=styles, orders=orders)
+	top_orders = restaurants.get_top_orders(restaurant_id)
+	return render_template("ownerpage.html", id = restaurant_id, menu=menu, restaurant=restaurant, reviews=reviews, styles=styles, orders=orders, top_orders=top_orders)
 
 @app.route("/add_restaurant", methods=["post"])
 def add_restaurant():
@@ -129,8 +130,8 @@ def add_restaurant():
 		for i in x:
 			styles.append(i)
 	restaurants.add_restaurant(name, phone, email, description, styles)
-	flash("Ravintolan lisääminen onnistui", "success")
-	return redirect("/ownerpage/" + str(restaurant_id))
+	flash("Ravintolan lisääminen onnistui, kuvan voit lisätä jälkikäteen", "success")
+	return redirect("/")
 
 @app.route("/remove", methods=["post"])
 def remove_dish():
