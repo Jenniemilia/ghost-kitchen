@@ -3,7 +3,6 @@
 {% block title %}
 	Kotisivu {% endblock %}
 	</head>
-
 {% block content %}
 
 <body>	
@@ -21,27 +20,23 @@
 		<div class="ratings">
 		<h3>Tähtiarvostelut:</h3>
 		<ul>
-			
-				{% for place in top_rated %}
-				<li>
+			{% for place in top_rated %}
+			<li>
 				{{ place.name }}
 				{% for n in range(place.avg_stars) %}
   					<span class="review-star-active">★</span>{% endfor %}</li> 			
-					
-			{% endfor %}
+					{% endfor %}
 		</ul>
 		</div>
 
 		{% if session.user_id %}
 		<h3>Omat suosikit:</h3>
 		<ul>
-		
 			{% for place in favorites %}
 			<li>{{ place.name}}</li>
 			{% endfor %}
 			{% else %}<p>Sinulla ei ole vielä suosikkeja</p>
 		{% endif %}
-	
 		</ul>
 		<br>
 	</div>
@@ -49,26 +44,14 @@
 		<div class="col-8">
 
 			{% if session.user_id %}
-			<h3>Hei {{ session.user_name }}! Mahtavaa nähdä sinut täällä!</h3>
+			<h3>Hei {{ session.user_name }}! Kiva nähdä sinut täällä!</h3>
 			{% else %}
-			<h4>Kirjautumalla sisään pääset katsomaan ravintoloiden arvosteluja sekä saat käyttöösi mahtavia etuja!</h4>	
+			<h5>Kirjautumalla sisään pääset katsomaan ravintoloiden arvosteluja sekä saat käyttöösi mahtavia etuja!</h5>	
 			{% endif %}
-
-
-			{% if session.user_role == 1 %}
-			<form action="/result" method= "GET">
-			<p>Mitä tekisi tänään mieli syödä?</p>
-
-
-			<p>Hae eri vaihtoehdoja.</p>
-	 		<input type="text" name="query" minlenght="1" maxlenght="15">
-			<br />
-			<input type="submit" value="Lähetä">
-			</form> 
 			<br>
 
-			{% elif session.user_role == 2 %}
-			<p>Haluatko muokata menua tai lisätä päivän tarjoukset? Valitse minkä ravintolan sivuja haluat muokata</p>
+			{% if session.user_role == 2 %}
+			<p>Valitse minkä ravintolan sivuja haluat muokata</p>
 			<div class="dropdown">
 			<button type="button bg-light" class="btn btn-info text-white dropdown-toggle" data-bs-toggle="dropdown">
 		  	Valitse Ravintola
@@ -83,16 +66,11 @@
 			<br>
 			</div>
 		</div>		
-	</div>
-
-				
+	</div>				
 
 <div class="container">
-	<h3>Katsele eri ravintoloiden tarjontaa: </h3>
-
-	
+	<h3>Katsele eri ravintoloiden tarjontaa: </h3>	
 	<div class="row mt-5 justify-content-center">
-       
         {% for restaurant in restaurants %}	
 			<div class="card card-custom mx-2 mb-3">
 				<img class="card-img-top" src="/static/{{ restaurant.id }}.png" alt="restaurant.name">
@@ -103,15 +81,10 @@
 					</div>
 				</div>
             {% endfor %}
-
-
 			</p>
 		</div>
-	</div>
-	
-			
+	</div>			
 </div>
-			
-	</body>
+</body>
 	
 {% endblock %}

@@ -8,8 +8,7 @@ import users, restaurants
 def index():
 	top_rated = restaurants.get_top_review()
 	user_id = users.user_id()
-	favorites = users.get_favorites(user_id)
-	
+	favorites = users.get_favorites(user_id)	
 	return render_template("index.html",user_id=user_id, users = users.get_all_users(), restaurants = restaurants.get_all_restaurants(), top_rated=top_rated, favorites=favorites)
 
 @app.route("/login", methods=["get", "post"])
@@ -58,7 +57,8 @@ def register():
 def result():
 	query = request.args["query"]
 	if len(query) < 1 or len(query) > 15:
-		return render_template("error.html", message = "Hakusanassa on oltava vähintään yksi kirjain, koita uudestaan!")
+		flash("Hakusanassa on oltava vähintään yksi kirjain, koita uudestaan!", "error")
+		return render_template("/result")
 	result = restaurants.get_query(query)
 	return render_template("result.html", query=query, result = result)
 	
@@ -70,8 +70,7 @@ def homepage(restaurant_id):
 	info = restaurants.get_restaurant_info(restaurant_id)
 	reviews = restaurants.get_review(restaurant_id)
 	user_id = users.user_id()
-	favorites = users.get_favorites_by_restaurant(restaurant_id, user_id)
-	
+	favorites = users.get_favorites_by_restaurant(restaurant_id, user_id)	
 	return render_template("homepage.html", reviews= reviews, user_id=user_id, id = restaurant_id, restaurant=restaurant, menu=menu, info=info, favorites=favorites)
 	
 
@@ -99,7 +98,8 @@ def ownerpage(restaurant_id):
 	menu = restaurants.get_menu_id(restaurant_id)
 	reviews = restaurants.get_review(restaurant_id)
 	styles = restaurants.get_styles()
-	return render_template("ownerpage.html", id = restaurant_id, menu=menu, restaurant=restaurant, reviews=reviews, styles=styles)
+	orders = restaurants.get_orders(restaurant_id)
+	return render_template("ownerpage.html", id = restaurant_id, menu=menu, restaurant=restaurant, reviews=reviews, styles=styles, orders=orders)
 
 @app.route("/add_restaurant", methods=["post"])
 def add_restaurant():
@@ -108,30 +108,28 @@ def add_restaurant():
 	restaurant_id=request.form["restaurant_id"]
 	name=request.form["name"]
 	if len(name) < 1 or len(name) > 20:
-			return render_template("error.html", message = "Ravintolan nimessä tulee olla 1-20 kirjainta, yritä uudestaan")
+		flash("Ravintolan nimessä tulee olla 1-20 kirjainta, yritä uudestaan", "error")
+		return render_template("/add_restaurant")
 	phone=request.form["phone"]
 	if len(phone) < 1 or len(phone) > 20:
-			return render_template("error.html", message = "Ravintolan puhelinnumerossa tulee olla 1-20 kirjainta, yritä uudestaan")
+		flash("Ravintolan puhelinnumerossa tulee olla 1-20 kirjainta, yritä uudestaan", "error")
+		return render_template("/add_restaurant")
 	email=request.form["email"]
-	if len(email) < 1 or len(email) > 20:
-		return render_template("error.html", message = "Ravintolan sähköpostissa tulee olla 1-20 kirjainta, yritä uudestaan")
+	if len(email) < 1 or len(email) > 50:
+		flash("Ravintolan sähköpostissa tulee olla 1-50 kirjainta, yritä uudestaan", "error")
+		return render_template("/add_restaurant")
 	description=request.form["description"]
 	if len(description) < 1 or len(description) > 50:
-		return render_template("error.html", message = "Ravintolan kuvauksessa tulee olla 1-50 kirjainta, yritä uudestaan")
+		flash("Ravintolan kuvauksessa tulee olla 1-50 kirjainta, yritä uudestaan", "error")
+		return render_template("/add_restaurant")
 	styles=request.form.getlist("style")
 	new_style = request.form["new_style"]
 	if new_style != "":
-		styles.append(new_style)
+		x = new_style.split(", ")
+		for i in x:
+			styles.append(i)
 	restaurants.add_restaurant(name, phone, email, description, styles)
-	
 	flash("Ravintolan lisääminen onnistui", "success")
-	return redirect("/ownerpage/" + str(restaurant_id))
-
-@app.route("/add_style", methods=["post"])
-def add_style():
-	restaurant_id=request.form["restaurant_id"]
-	styles=request.form["style"]
-	flash("Uuden hakusanan lisääminen onnistui", "success")
 	return redirect("/ownerpage/" + str(restaurant_id))
 
 @app.route("/remove", methods=["post"])
@@ -152,7 +150,7 @@ def new_dish():
 	dish=request.form["dish"]
 	price=request.form["price"]
 	restaurants.add_dish(restaurant_id, dish, price)
-	flash("Ruokalajin lisäys onnistui", "success")
+	flash("Ruokalajin lisääminen onnistui", "success")
 	return redirect("/ownerpage/" + str(restaurant_id))
 
 @app.route("/remove_comment", methods=["post"])
@@ -164,14 +162,6 @@ def remove_comment():
 	restaurants.remove_comment(reviews_id)
 	flash("Kommentin poisto onnistui", "success")
 	return redirect("/ownerpage/" + str(restaurant_id))
-
-
-@app.route("/userpage/<int:user_id>")
-def userpage(user_id):
-	user_id = users.user_id() 
-	user = users.get_user_info(user_id)
-
-	return render_template("userpage.html", user= user)
 	
 @app.route("/review", methods=["post"])
 def review():
@@ -185,7 +175,6 @@ def review():
 	comment = request.form["comment"]
 	if comment == "":
 		comment = " - "
-
 	restaurants.add_review(restaurant_id, users.user_id(), stars, comment)
 	flash("Arvostelun lisäys onnistui", "success")
 	return redirect("/homepage/" + str(restaurant_id))
@@ -198,7 +187,6 @@ def orders():
 	dishes=request.form.getlist("dish")
 	restaurants.orders(restaurant_id, user_id, dishes)
 	flash("Ruuat laitettu tilaukseen, kiitos!", "success")
-	print(dishes)
 	return redirect("/homepage/" + str(restaurant_id))
 
 

@@ -1,8 +1,6 @@
 from flask import session
 from db import db
 
-#from random import randint
-
 def get_restaurant_id():
 	return session.get("restaurant_id", 0)
 
@@ -25,8 +23,7 @@ def get_review(restaurant_id):
 def get_top_review():
 	sql = """SELECT restaurants.name, CAST(AVG(stars)AS INTEGER) as avg_stars FROM restaurants, reviews WHERE 
 	reviews.restaurant_id=restaurants.id GROUP by restaurants.name ORDER BY avg_stars desc LIMIT 3"""
-	return db.session.execute(sql).fetchall()
-	
+	return db.session.execute(sql).fetchall()	
 
 def add_review(restaurant_id, user_id, stars, comment):
 	sql = """INSERT INTO reviews (restaurant_id, user_id, stars, comment, created, visible) VALUES (:restaurant_id, 
@@ -45,7 +42,6 @@ def get_menu_id(restaurant_id):
 	:restaurant_id AND menu.visible=TRUE"""
 	result = db.session.execute(sql, {"restaurant_id": restaurant_id})
 	return result.fetchall()
-
 
 def get_query(query): 
 	sql = """SELECT DISTINCT restaurants.id, restaurants.name, restaurants.description FROM restaurants, 
@@ -93,3 +89,13 @@ def orders(restaurant_id, user_id, dishes):
 		sql = "INSERT INTO delivery (order_id, dish_id) VALUES (:order_id, :dish)"
 		db.session.execute(sql, {"order_id":order_id, "dish":dish})
 	db.session.commit()
+
+def get_orders(restaurant_id):
+	sql = """SELECT D.order_id, R.name, R.id, M.dish, created FROM Delivery D, Restaurants R, Orders O, Menu M WHERE
+	 O.id=D.order_id AND M.id=D.dish_id AND R.id=O.restaurant_id AND R.id=:restaurant_id"""
+	result = db.session.execute(sql, {"restaurant_id":restaurant_id})
+	return result
+
+def get_top_orders(restaurant_id):
+	pass
+

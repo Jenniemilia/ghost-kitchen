@@ -31,49 +31,48 @@
 
   <div class="container-fluid"></div>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        
-          <a class="navbar-brand" href="/">Ghost Kitchen</a>
-          <ul class="navbar-nav">    
-                 <li class="nav-item">
-                <a class="nav-link" href="/">Etusivu</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">    
+      <a class="navbar-brand" href="/">Ghost Kitchen</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">    
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Etusivu</a>
               </li>
-            </ul>
-
-            <ul class="navbar-nav navbar-right">
-              {% if session.user_id %}
-              <li class="nav-item">
-                <a class="nav-link" href="/userpage/{{session.user_id}}">Omat tiedot</a>
+            {% if session.user_id %}
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Kirjaudu ulos</a>
             </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/logout">Kirjaudu ulos</a>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Kirjaudu sisään</a>
             </li>
-              {% else %}
-              <li class="nav-item">
-                    <a class="nav-link" href="/login">Kirjaudu sisään</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Rekisteröidy</a>
-                </li>
-            </ul>
-              {% endif %}
-              <!--
-              <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Haku" aria-label="Haku">
-              <button class="btn btn-outline-success" type="submit">Haku</button>
-            </form> -->
-          </nav>
-          </div>
+            <li class="nav-item">
+              <a class="nav-link" href="/register">Rekisteröidy</a>
+            </li>               
+              {% endif %}</ul>
+            
+            <form class="form-inline my-2 my-lg-0" action="/result" method= "GET" class="form-inline">
+              <input class="form-control mr-sm-2" type="text" name="query" placeholder="Haku" aria-label="Haku">
+              <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Lähetä">
+            </form> 
+        </div>
+      </nav>
+         
     
       <!-- Messages and alerts-->
       
       {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
           {% for category, message in messages %}
-            {% if category == "message" %}
-            <div class="alert alert-success" role="alert">
+            {% if category == "success" %}
+            <div class="alert alert-success alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             {% else %}
-              <div class="alert alert-warning" role="alert">
+              <div class="alert alert-warning alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             {% endif %}
               {{ message }}
               </div>
@@ -82,15 +81,10 @@
         {% endwith %}
       </div>
 
-
   </body>
 
         {% block content %}
-
-      
-
         {% endblock %}
-
 
 <!--Footer-->
 <footer class="container-fluid text-center">
@@ -100,30 +94,9 @@
   <p>© Ghost Kitchen</p>
 </footer>
 
-
-
-<!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.min.js" integrity="sha384-PsUw7Xwds7x08Ew3exXhqzbhuEYmA2xnwc8BuD6SEr+UmEHlX8/MCltYEodzWA4u" crossorigin="anonymous"></script>
-      -->
-
-
-
-
-
-
-
-
 </body>
-
-
-
-
 
 </html>

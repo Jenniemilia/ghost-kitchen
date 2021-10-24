@@ -36,8 +36,7 @@ def register(name, password, role):
 		db.session.execute(sql, {"name":name, "password":hash_value, "role":role})
 		db.session.commit()
 	except:
-		return False
-    
+		return False    
 	return login(name, password)
 
 def check_csrf():

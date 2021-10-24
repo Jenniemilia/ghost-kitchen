@@ -5,7 +5,6 @@
 {{ restaurant. name }}
 {% endblock %}</head>
 
-
 {% block content %}
 <body>
     <div class="container">
@@ -25,10 +24,9 @@
             <a class="nav-link" data-toggle="tab" href="#ravintola">Lisää ravintola</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#tarjoukset">Lisää tai poista tarjous</a>
+            <a class="nav-link" data-toggle="tab" href="#tilaukset">Selaa tilaushistoriaa</a>
           </li>
         </ul>
-
 
         <!-- Tab panes -->
         <div class="tab-content">
@@ -89,7 +87,7 @@
                 <p>Ravintolan puhelinnumero:<br>
                     <textarea name="phone" rows="1" cols="30" maxlenght="20"></textarea>
                 <p>Ravintolan sähköposti:<br>
-                    <textarea name="email" rows="1" cols="30" maxlenght="20"></textarea> 
+                    <textarea name="email" rows="1" cols="30" maxlenght="50"></textarea> 
                 <p>Lyhyt kuvaus ravintolasta:<br>
                     <textarea name="description" rows="2" cols="30" maxlenght="50"></textarea> 
                 <br>
@@ -100,26 +98,32 @@
                 {% for style in styles %} 
                 <input type="checkbox" name="style" value="{{ style.style }}"> {{ style.style }}
                 {% endfor %}<br>
-                
 
-                <br><p>Tai lisää uusi hakusana:<br>
+                <br><p>Tai lisää uusi hakusana (erottele useampi hakusana pilkulla):<br>
                 <textarea name="new_style" rows="1" cols="30" maxlenght="20"></textarea>
                 </p>
 
                 <input type="submit" value="Lähetä">
                 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 
-
             </form>
+        </div>
 
+        <div id="tilaukset" class="container tab-pane fade"><br>
+
+            <h5>Katso tilaushistoriaa</h5>    
+            
+            {% for order in orders %}
+            <ul><li>
+            Tilausnumero: {{ order[0]}}, Tilaus luotu: {{ order[4].strftime("%d.%m.%Y %H:%M") }}
+            {{ order[3]}}
+            </li></ul>
+            
+            {% endfor %}
 
             </div>
         </div>
     </div>
 </body>
-
-
-
-
 
 {% endblock %}
