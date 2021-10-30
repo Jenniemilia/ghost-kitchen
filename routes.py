@@ -182,9 +182,12 @@ def review():
 
 @app.route("/orders", methods=["post"])
 def orders():
-	users.check_csrf()
 	user_id = users.user_id()
 	restaurant_id=request.form["restaurant_id"]
+	if not user_id:
+		flash("Kirjaudu sisään niin pääset tekemään tilauksen loppuun", "error")
+		return redirect("/homepage/" + str(restaurant_id))
+	
 	dishes=request.form.getlist("dish")
 	restaurants.orders(restaurant_id, user_id, dishes)
 	flash("Ruuat laitettu tilaukseen, kiitos!", "success")
