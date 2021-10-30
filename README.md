@@ -21,7 +21,7 @@ Suosikit - Etusivulla näkyy käyttäjn omat suosikkiravintolat.
 
 **Ravintolan sivu**
 
-Käyttäjä näkee tarkempaa tietoa ravintolasta. Täältä löytyy myös muiden asiakkaiden antamat arvostelut sekä kirjautuneena voi kirjoittaa oman arvostelun sekä lisätä ravintolan suosikikseen. Sivuilta voi myös valita tuooteita ostoskoriin ja tehdä ruokatilauksen.
+Käyttäjä näkee tarkempaa tietoa ravintolasta. Täältä löytyy myös muiden asiakkaiden antamat arvostelut sekä kirjautuneena voi kirjoittaa oman arvostelun sekä lisätä ravintolan suosikikseen. Sivuilta voi myös valita annoksia ostoskoriin ja tehdä ruokatilauksen.
 
 **Ylläpitäjä**
 
