@@ -52,7 +52,20 @@
             <li class="nav-item">
               <a class="nav-link" href="/register">Rekisteröidy</a>
             </li>               
-              {% endif %}</ul>
+            {% endif %}
+            {% if session.user_role == 2 %}
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Muokkaa   
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              {% for restaurant in restaurants %}
+		  		    <a class="dropdown-item" href="/ownerpage/{{restaurant.id}}">{{ restaurant.name }}</a>
+			  	    {% endfor %}
+              {% endif %}  
+        </div>
+      </li> 
+          </ul>
             
             <form class="form-inline my-2 my-lg-0" action="/result" method= "GET" class="form-inline">
               <input class="form-control mr-sm-2" type="text" name="query" placeholder="Haku" aria-label="Haku">
@@ -81,10 +94,10 @@
         {% endwith %}
       </div>
 
-  </body>
+      {% block content %}
+      {% endblock %}
 
-        {% block content %}
-        {% endblock %}
+  </body>  
 
 <!--Footer-->
 <footer class="container-fluid text-center">
@@ -96,7 +109,5 @@
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
-
-</body>
 
 </html>

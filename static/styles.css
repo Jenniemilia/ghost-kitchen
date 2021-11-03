@@ -1,5 +1,5 @@
 body {
-    font: 400 15px Lato, sans-serif;
+    font: 400 15px 'Benton Sans';
     line-height: 1.8;
     margin-left: auto;
 
@@ -13,20 +13,25 @@ body {
     background-color: lightseagreen;
     color: white;
     padding: 60px 15px;
-    font-family: Montserrat, sans-serif;
+    font-family: 'Courier', monospace, sans-serif;
 }
 
 .container-fluid {
+
+    font-family: 'Courier New', Courier, monospace;
     padding: 40px 30px;
     margin: auto;
 }
 
 .container-fluid bg-light {
+
+  font-family: 'Benton Sans';
   padding: 40px 30px;
   margin: auto;
 }
  
 .card-custom {
+  font-family: 'Courier New', Courier, monospace;
   max-width: 220px;
 }
 
@@ -43,8 +48,9 @@ body {
   display: none;
 }
   
-.footer .glyphicon {
-    font-size: 20px;
-    margin-bottom: 20px;
-    color: #f4511e;
+footer {
+  padding: 60px 15px;
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-family: 'Courier', monospace, sans-serif;
   }

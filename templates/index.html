@@ -15,7 +15,7 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-4">
+		<div class="col-6">
 
 		<div class="ratings">
 		<h3>Tähtiarvostelut:</h3>
@@ -28,48 +28,29 @@
 					{% endfor %}
 		</ul>
 		</div>
-
-		{% if session.user_id %}
-		<h3>Omat suosikit:</h3>
-		<ul>
-			{% for place in favorites %}
-			<li>{{ place.name}}</li>
-			{% endfor %}
-			{% else %}<p>Sinulla ei ole vielä suosikkeja</p>
-		{% endif %}
-		</ul>
-		<br>
 	</div>
 
-		<div class="col-8">
+		<div class="col-6">
 
-			{% if session.user_id %}
-			<h3>Hei {{ session.user_name }}! Kiva nähdä sinut täällä!</h3>
+			{% if session.user_role == 1%}
+			{% if not favorites %}
+			<h3>Omat suosikit:</h3>
+			<p>Sinulla ei ole vielä suosikkeja</p>
 			{% else %}
-			<h5>Kirjautumalla sisään pääset katsomaan ravintoloiden arvosteluja sekä saat käyttöösi mahtavia etuja!</h5>	
-			{% endif %}
-			<br>
-
-			{% if session.user_role == 2 %}
-			<p>Valitse minkä ravintolan sivuja haluat muokata</p>
-			<div class="dropdown">
-			<button type="button bg-light" class="btn btn-info text-white dropdown-toggle" data-bs-toggle="dropdown">
-		  	Valitse Ravintola
-			</button>
-			<ul class="dropdown-menu">
-				{% for restaurant in restaurants %}
-		  		<li><a class="dropdown-item" href="/ownerpage/{{restaurant.id}}">{{ restaurant.name }}</a></li>
-			  	{% endfor %}
-			{% endif %}
+			<h3>Omat suosikit:</h3>
+			<ul>
+				{% for place in favorites %}
+				<li>{{ place.name}}</li>
+				{% endfor %}
+			{% endif %}{% endif %}
 			</ul>
-		</p>
-			<br>
+
 			</div>
 		</div>		
-	</div>				
+	</div><br>				
 
-<div class="container">
-	<h3>Katsele eri ravintoloiden tarjontaa: </h3>	
+<div class="container text-center">
+	<h3><strong>Ravintolat: </strong></h3>	
 	<div class="row mt-5 justify-content-center">
         {% for restaurant in restaurants %}	
 			<div class="card card-custom mx-2 mb-3">

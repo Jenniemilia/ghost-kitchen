@@ -67,7 +67,7 @@
                 {% endif %}<br>
             
                 <p>{% if reviews %}
-                <h3>Lue muiden jättämiä arvosteluita</h3><br>
+                <h3>Muiden jättämiä arvosteluita</h3><br>
                 {% endif %}
 
                 <ul>
@@ -84,14 +84,12 @@
             {% if session.user_id %}
             {% if favorites %}
         
-            <p>Poista ravintola suosikeista</p>
             <form action="/not_favorite" method="POST">
                 <input type="submit" class="btn btn-info" value="Poista suosikeista">
                 <input type="hidden" name="restaurant_id" value="{{ id }}">
                 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             </form>
             {% else %}
-            <p>Lisää ravintola suosikiksi</p>
             <form action="/favorite" method="POST">
                 <input type="submit" class="btn btn-info" value="Lisää suosikiksi">
                 <input type="hidden" name="restaurant_id" value="{{ id }}">
