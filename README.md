@@ -1,13 +1,22 @@
+Helsingin Yliopiston Tietokantasovelluksen harjoitustyö. Tavoitteena on luoda Herokussa toimiva web-sovellus, joka hyödyntää Pythonin Flask-kirjastoa sekä PostreSQL-tietokantaa.
+
 # ghost-kitchen
-Tietokantasovellus (TSOHA)
 
 Ghost Kitchen on paikka, joka mahdollistaa useamman ravintolan toimimisen saman katon alla. Paikassa ei ole ollenkaan perinteisiä asiakaspaikkoja, vaan ruokaa valmistetaan ainoastaan toimitettavaksi. Koska useampi ravintola sijaitsee saman katon alla, pystytään ruoka valmistamaan tehokkaasti, jolloin ruokahävikin määrä pienenee huomattavasti.
 Ghost Kitchenin ei myöskään tarvitse kilpailla sijainnilla, vaan tilat voidaan järjestää edullisemmalta paikalta, jolloin neliöhinnat eivät ole niin korkealla.
 Kuljetuksiin hyödynnetään alalla toimivia yhteistyökumppaneita.
 
-https://ghost-kitchen.herokuapp.com/
+Sovellusta voi kokeilla Herokussa [ghost-kitchen](https://ghost-kitchen.herokuapp.com/)
 
-**Keskeiset toiminnot**
+Voit luoda oman käyttäjätilin tai kirjautua valmiilla tunnuksilla:
+
+|                | Käyttäjätunnus   | Salasana  |
+| -------------  |:----------------:|:---------:|
+| Admin oikeudet | Päällikkö        | ElHefe    |
+|   Asiakas      | Kotikokki        |  Kokki3   |
+
+
+## Keskeiset toiminnot
 
 **Etusivu** 
 
@@ -19,7 +28,7 @@ TOP listaus – Etusivulla näkyy tähtiarvio perustuen käyttäjien arviointien
 
 Suosikit - Etusivulla näkyy käyttäjän omat suosikkiravintolat.
 
-**Ravintolan sivu**
+**Ravintolan kotisivu**
 
 Käyttäjä näkee tarkempaa tietoa ravintolasta. Täältä löytyy myös muiden asiakkaiden antamat arvostelut sekä kirjautuneena voi kirjoittaa oman arvostelun sekä lisätä ravintolan suosikikseen. Sivuilta voi myös valita annoksia ostoskoriin ja tehdä ruokatilauksen.
 
