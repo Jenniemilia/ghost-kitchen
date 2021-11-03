@@ -21,10 +21,10 @@
             <a class="nav-link" data-toggle="tab" href="#kommentit">Poista kommentteja</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#ravintola">Lisää ravintola</a>
+            <a class="nav-link" data-toggle="tab" href="#tilaukset">Selaa tilaushistoriaa</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#tilaukset">Selaa tilaushistoriaa</a>
+            <a class="nav-link" data-toggle="tab" href="#ravintola">Lisää ravintola</a>
           </li>
         </ul>
 
@@ -78,6 +78,25 @@
                 </form>    
             </div>
 
+        <div id="tilaukset" class="container tab-pane fade"><br>
+
+            <p><strong>Tilatuimmat annokset:</strong></p>
+            {% for dish in top_orders %}
+            <ul><li>
+                {{dish[0]}} kpl - {{ dish[1]}}
+            </li></ul> 
+            {% endfor %} <br>
+            
+            <p><strong>Kaikki tilaukset:</strong></p>
+            {% for order in orders %}
+            <ul><li>
+                Tilausnumero: {{ order[0]}}, Tilaus luotu: {{ order[4].strftime("%d.%m.%Y %H:%M") }}
+                {{ order[3]}}
+            </li></ul>           
+            {% endfor %}
+
+            </div>
+
         <div id="ravintola" class="container tab-pane fade"><br>
 
             <h5>Lisää uusi ravintola</h5>
@@ -96,7 +115,7 @@
            
                 <p>Valitse millä hakusanoilla ravintolaa voi etsiä:</p>
                 {% for style in styles %} 
-                <input type="checkbox" name="style" value="{{ style.style }}"> {{ style.style }}
+                <input type="checkbox" name="style" value="{{ style.style }}"> {{ style.style }}&nbsp;
                 {% endfor %}<br>
 
                 <br><p>Tai lisää uusi hakusana (erottele useampi hakusana pilkulla):<br>
@@ -109,26 +128,7 @@
             </form>
         </div>
 
-        <div id="tilaukset" class="container tab-pane fade"><br>
-
-            <h5>Katso tilaushistoriaa</h5><br>   
-
-            <p><strong>Tilatuimmat annokset:</strong></p>
-            {% for dish in top_orders %}
-            <ul><li>
-                {{dish[0]}} kpl - {{ dish[1]}}
-            </li></ul> 
-            {% endfor %} <br>
-            
-            <p><strong>Kaikki tilaukset:</strong></p>
-            {% for order in orders %}
-            <ul><li>
-                Tilausnumero: {{ order[0]}}, Tilaus luotu: {{ order[4].strftime("%d.%m.%Y %H:%M") }}
-                {{ order[3]}}
-            </li></ul>           
-            {% endfor %}
-
-            </div>
+        
         </div>
     </div>
 </body>

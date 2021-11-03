@@ -2,7 +2,7 @@
 
 {% extends "layout.html" %}
 <head>{% block title %}
-{{ restaurant.name }}
+{{ info.name }}
 {% endblock %} </head>
 
 {% block content %}
@@ -10,7 +10,7 @@
 <body>
 
     <div class="jumbotron text-center">
-        <h2> {{ restaurant.name }} </h2>
+        <h2> {{ info.name }} </h2>
         <h3> {{ info.description }} </h3>
     </div>
         
@@ -36,7 +36,7 @@
                 </form><br>
             </div>
             <div class="col-sm-4">
-                <img src="/static/{{ id }}.png" class="img-responsive" alt="{{restaurant.name}}">
+                <img src="/static/{{ id }}.png" class="img-responsive" alt="{{info.name}}">
             </div>
         </div>
 

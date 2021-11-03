@@ -65,13 +65,12 @@ def result():
 
 @app.route("/homepage/<int:restaurant_id>")
 def homepage(restaurant_id):
-	restaurant = restaurants.get_restaurant_info(restaurant_id)
 	menu = restaurants.get_restaurant_menu(restaurant_id)
 	info = restaurants.get_restaurant_info(restaurant_id)
 	reviews = restaurants.get_review(restaurant_id)
 	user_id = users.user_id()
 	favorites = users.get_favorites_by_restaurant(restaurant_id, user_id)	
-	return render_template("homepage.html", reviews= reviews, user_id=user_id, id = restaurant_id, restaurant=restaurant, menu=menu, info=info, favorites=favorites)
+	return render_template("homepage.html", reviews= reviews, user_id=user_id, id = restaurant_id, restaurants=restaurants.get_all_restaurants(), menu=menu, info=info, favorites=favorites)
 	
 
 @app.route("/favorite", methods=["post"])
