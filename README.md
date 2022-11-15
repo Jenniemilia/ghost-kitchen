@@ -1,4 +1,4 @@
-Helsingin Yliopiston Tietokantasovelluksen harjoitustyö. Tavoitteena on luoda Herokussa toimiva web-sovellus, joka hyödyntää Pythonin Flask-kirjastoa sekä PostreSQL-tietokantaa.
+Helsingin Yliopiston Tietokantasovelluksen harjoitustyö. Tavoitteena on luoda Herokussa toimiva web-sovellus, joka hyödyntää Pythonin Flask-kirjastoa sekä PostgreSQL-tietokantaa.
 
 # ghost-kitchen
 
